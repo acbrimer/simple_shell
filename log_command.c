@@ -1,14 +1,18 @@
+#include "benny.h"
+
 /**
  * log_cmd - appends cmd to logfile
  * @logfile: path for logfile to use
  * @cmd: command text
  * @cmd_len: length of command text
+ *
+ * Return: 1 for success, else -1
 */
 int log_cmd(const char *logfile, char *cmd, size_t cmd_len)
 {
 	int fd;
 	ssize_t writelen;
-	
+
 	if (logfile == NULL)
 		return (-1);
 	fd = open(logfile, O_RDWR | O_CREAT | O_APPEND, 0600);

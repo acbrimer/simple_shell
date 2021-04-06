@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include "benny.h"
 
 /**
  * _charcount - counts non-space chars in string
