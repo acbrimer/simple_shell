@@ -15,7 +15,7 @@
 - Prototypes:
   - `int is_path(char *envp_str);`
   - `char **get_env_paths(char **envp);`
-  - `char *get_command_path(cmd_t cmd, **envp);`
+  - `char *get_command_path(cmd_t cmd);`
 #### get_command_fn.c
 - Prototypes:
   - `int (*get_command_fn(cmd_t cmd))(cmd_t);`

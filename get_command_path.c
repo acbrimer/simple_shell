@@ -1,13 +1,21 @@
-int is_path(char *s1)
+#include "benny.h"
+
+/**
+ * is_path - checks if environ var is PATH
+ * @s: string environment var
+ *
+ * Return: 1 for path, else 0
+*/
+int is_path(char *s)
 {
 	int i = 0;
-	char *s2 = "PATH";
+	char *p = "PATH";
 
-	while (s1[i])
+	while (s[i])
 	{
-		if (s1[i] == '=')
+		if (s[i] == '=')
 			return (1);
-		if (s1[i] != s2[i])
+		if (s[i] != p[i])
 			break;
 		i++;
 	}
@@ -15,6 +23,12 @@ int is_path(char *s1)
 	return (0);
 }
 
+/**
+ * get_env_paths - returns array of paths from current env
+ * @envp: environment var
+ *
+ * Return: array of paths
+*/
 char **get_env_paths(char **envp)
 {
 	int i = 0, ii = 0;
