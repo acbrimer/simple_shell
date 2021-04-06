@@ -65,9 +65,10 @@ char *_strtok(char *str, int start, char delim)
  * strtow - splits string into array of strings
  * @str: string to split
  * @delim: delimiter char
+ *
  * Return: char ** array of strings
 */
-char **strtow(char *str, char delim)
+char **_strtow(char *str, char delim)
 {
 	int cc = 0, wc = 0, i = 0, r = 0, l, ii;
 	char **res;
@@ -77,7 +78,7 @@ char **strtow(char *str, char delim)
 	wc = _wordcount(str, delim);
 	if (str == NULL || cc == 0)
 		return (NULL);
-	res = malloc(sizeof(char *) * cc + wc);
+	res = malloc(sizeof(char *) * cc + wc + 1);
 	while (str[i])
 	{
 		if (str[i] == delim)
@@ -85,7 +86,6 @@ char **strtow(char *str, char delim)
 		else
 		{
 			l = 0;
-
 			tmp = _strtok(str, i, delim);
 			if (tmp == NULL)
 				return (NULL);

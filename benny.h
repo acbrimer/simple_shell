@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include <stdio.h>
 
 /**
  * struct cmd_s - holds parsed cmd
@@ -22,14 +23,16 @@ struct cmd_s
 	int out_fd;
 };
 
-typedef cmd_s cmd_t;
+typedef struct cmd_s cmd_t;
+
+char **environ;
 
 int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
 /* parse_command.c */
 cmd_t *parse_command(char *cmd_str);
 /* get_command_path.c */
 int is_path(char *envp_str);
-char **get_env_paths(char **envp);
+char **get_env_paths(void);
 char *get_command_path(cmd_t cmd);
 /* get_command_fn.c */
 int (*get_command_fn(cmd_t cmd))(cmd_t);
@@ -40,7 +43,7 @@ void handle_command_error(cmd_t cmd);
 void _cd(cmd_t cmd);
 /* strtok.c */
 char **_strtow(char *str, char delim);
-char char *_strtok(char *str, int start, char delim);
+char *_strtok(char *str, int start, char delim);
 int _charcount(char *str, char delim);
 int _wordcount(char *str, char delim);
 /* strdup.c */
