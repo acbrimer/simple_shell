@@ -28,9 +28,7 @@ int main(int argc, char **argv, char **envp)
 		cmdBuffer[cmdBufferLen - 1] = '\0';
 		cmd = parse_command(cmdBuffer);
 		execute_command(cmd);
-		free(cmd->cmd);
-		free(cmd->args);
-		free(cmd);
+		free_cmd_t(cmd);
 		if (!interact_mode)
 			break;
 	}
