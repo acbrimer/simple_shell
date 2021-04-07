@@ -13,24 +13,23 @@ int execute_command(cmd_t *cmd)
 	int status, exec;
 
 	cmd_path = get_command_path(*cmd);
-	printf("%s\n", cmd_path);
 	if (cmd_path != NULL)
-	  {
-	    pid = fork();
-	    
-	    if (pid < 0)
-	      perror("Error in fork");
-	    else if (pid == 0)
-	      {
-		exec = execve(cmd_path, cmd->args, environ);
-		if (exec == -1)
-		  perror("Error in execve");
-	      }
-	    
-	    else
-	      {
-		wait(&status);
-	      }
-	  }
+	{
+		pid = fork();
+
+		if (pid < 0)
+			perror("Error in fork");
+		else if (pid == 0)
+		{
+			exec = execve(cmd_path, cmd->args, environ);
+			if (exec == -1)
+				perror("Error in execve");
+		}
+
+		else
+		{
+			wait(&status);
+		}
+	}
 	return (1);
 }

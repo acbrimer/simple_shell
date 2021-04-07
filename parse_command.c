@@ -1,7 +1,7 @@
 #include "benny.h"
 
-/*
- * parse_command - reads command string and returns array of 
+/**
+ * parse_command - reads command string and returns struct
  * @cmd_str: command string
  *
  * Return: new cmd_t struct with info from string
