@@ -62,7 +62,7 @@ char *_strtok(char *str, int start, char delim)
 }
 
 /**
- * strtow - splits string into array of strings
+ * _strtow - splits string into array of strings
  * @str: string to split
  * @delim: delimiter char
  *

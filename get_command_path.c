@@ -58,7 +58,7 @@ char *get_command_path(cmd_t cmd)
 	env_paths = get_env_paths();
 	while (env_paths[i])
 	{
-		full_path = _strdup(str_concat(str_concat(env_paths[i],"/"), cmd.cmd));
+		full_path = _strdup(str_concat(str_concat(env_paths[i], "/"), cmd.cmd));
 		found_file = stat(full_path, &file_stat);
 		if (found_file == 0)
 			return (full_path);
@@ -67,4 +67,3 @@ char *get_command_path(cmd_t cmd)
 
 	return (NULL);
 }
-

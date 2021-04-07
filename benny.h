@@ -25,7 +25,7 @@ struct cmd_s
 
 typedef struct cmd_s cmd_t;
 
-char **environ;
+extern char **environ;
 
 int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
 /* parse_command.c */

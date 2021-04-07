@@ -18,7 +18,7 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	environ = envp;
+
 	while (1)
 	{
 		if (interact_mode)
