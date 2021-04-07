@@ -78,7 +78,7 @@ char **_strtow(char *str, char delim)
 	wc = _wordcount(str, delim);
 	if (str == NULL || cc == 0)
 		return (NULL);
-	res = malloc(sizeof(char *) * cc + wc + 1);
+	res = malloc(sizeof(char *) * cc + wc);
 	while (str[i])
 	{
 		if (str[i] == delim)
@@ -88,7 +88,10 @@ char **_strtow(char *str, char delim)
 			l = 0;
 			tmp = _strtok(str, i, delim);
 			if (tmp == NULL)
+			{
+				free(res);
 				return (NULL);
+			}
 			while (tmp[l])
 				l++;
 			res[r] = malloc(sizeof(char) * (l + 1));

@@ -25,11 +25,11 @@ int execute_command(cmd_t *cmd)
 			if (exec == -1)
 				perror("Error in execve");
 		}
-
 		else
 		{
 			wait(&status);
 		}
 	}
+	free(cmd_path);
 	return (1);
 }
