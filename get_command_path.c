@@ -33,13 +33,16 @@ char **get_env_paths(void)
 	int i = 0;
 	char *p = "PATH";
 	char *path;
+	char **env_paths;
 
 	/* loop through strings in envp to see if envp[i] is path */
 	/* once envp[i] == path, split string on ':' after '=' */
 	while (is_path(environ[i]) == 0)
 		i++;
-	path = environ[i];
-	return (_strtow((path + 5), ':'));
+	path = _strdup((environ[i] + 5));
+	env_paths = _strtow(path, ':');
+	free(path);
+	return (env_paths);
 }
 
 /**
@@ -50,20 +53,26 @@ char **get_env_paths(void)
 */
 char *get_command_path(cmd_t cmd)
 {
-	char **env_paths;
+	char **env_paths = NULL;
 	int i = 0, found_file;
-	char *full_path;
 	struct stat file_stat;
+	char *cmd_path = NULL;
+	char *delim = "/";
 
 	env_paths = get_env_paths();
 	while (env_paths[i])
 	{
-		full_path = _strdup(str_concat(str_concat(env_paths[i], "/"), cmd.cmd));
-		found_file = stat(full_path, &file_stat);
+		cmd_path = str_concat(env_paths[i], cmd.cmd, delim);
+		found_file = stat(cmd_path, &file_stat);
 		if (found_file == 0)
-			return (full_path);
+			break;
 		i++;
 	}
-
-	return (NULL);
+	free_str_array(env_paths);
+	if (found_file != 0)
+	{
+		free(cmd_path);
+		return (NULL);
+	}
+	return (cmd_path);
 }
