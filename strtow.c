@@ -89,12 +89,17 @@ char **_strtow(char *str, char delim)
 			tmp = _strtok(str, i, delim);
 			if (tmp == NULL)
 			{
-				free(res);
+				free_str_array(res);
 				return (NULL);
 			}
 			while (tmp[l])
 				l++;
 			res[r] = malloc(sizeof(char) * (l + 1));
+			if (res[r] == NULL)
+			{
+				free_str_array(res);
+				return (NULL);
+			}
 			for (ii = 0; ii < l; ii++)
 				res[r][ii] = tmp[ii];
 			res[r][ii] = '\0';

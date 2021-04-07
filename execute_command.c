@@ -29,7 +29,7 @@ int execute_command(cmd_t *cmd)
 		{
 			wait(&status);
 		}
+		free(cmd_path);
 	}
-	free(cmd_path);
 	return (1);
 }
