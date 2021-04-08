@@ -58,7 +58,7 @@ void free_cmd_t(cmd_t *cmd);
 /* strcmp.c */
 int _strcmp(char *s1, char *s2);
 /* builtin.c */
-int builtin(cmd_t *cmd);
-void exitFunction(void);
+int builtin(cmd_t *cmd, char *cmdBuffer);
+void exitFunction(cmd_t *cmd, char *cmdBuffer);
 void printEnv(void);
 #endif

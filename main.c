@@ -27,7 +27,7 @@ int main(int argc, char **argv, char **envp)
 		log_cmd("log.txt", cmdBuffer, cmdBufferLen);
 		cmdBuffer[cmdBufferLen - 1] = '\0';
 		cmd = parse_command(cmdBuffer);
-		builtin(cmd);
+		builtin(cmd, cmdBuffer);
 		execute_command(cmd);
 		free_cmd_t(cmd);
 		if (!interact_mode)
