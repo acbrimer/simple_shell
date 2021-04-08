@@ -11,7 +11,7 @@
 char *str_concat(char *s1, char *s2, char *delim)
 {
 	int a = 0, b = 0, d = 0, i, l;
-	char *n;
+	char *n = NULL;
 
 	if (s1 != NULL)
 		while (s1[a])
@@ -23,7 +23,7 @@ char *str_concat(char *s1, char *s2, char *delim)
 		while (delim[d])
 			d++;
 	l = a + b + d;
-	n = (char *)malloc(sizeof(char) * l + 1);
+	n = malloc(sizeof(char) * l + 1);
 	if (n == NULL)
 		return (NULL);
 	for (i = 0; i < a; i++)

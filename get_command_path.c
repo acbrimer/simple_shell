@@ -39,9 +39,8 @@ char **get_env_paths(void)
 	/* once envp[i] == path, split string on ':' after '=' */
 	while (is_path(environ[i]) == 0)
 		i++;
-	path = _strdup((environ[i] + 5));
+	path = environ[i] + 5;
 	env_paths = _strtow(path, ':');
-	free(path);
 	return (env_paths);
 }
 
@@ -55,24 +54,24 @@ char *get_command_path(cmd_t cmd)
 {
 	char **env_paths = NULL;
 	int i = 0, found_file;
-	struct stat file_stat;
+	struct stat *file_stat;
 	char *cmd_path = NULL;
 	char *delim = "/";
 
+	file_stat = malloc(sizeof(struct stat));
 	env_paths = get_env_paths();
 	while (env_paths[i])
 	{
 		cmd_path = str_concat(env_paths[i], cmd.cmd, delim);
-		found_file = stat(cmd_path, &file_stat);
+		found_file = stat(cmd_path, file_stat);
 		if (found_file == 0)
 			break;
+		free(cmd_path);
 		i++;
 	}
+	free(file_stat);
 	free_str_array(env_paths);
 	if (found_file != 0)
-	{
-		free(cmd_path);
 		return (NULL);
-	}
 	return (cmd_path);
 }
