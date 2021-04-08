@@ -1,26 +1,22 @@
 #include "benny.h"
+#include <limits.h>
 
-/**
- * is_path - checks if environ var is PATH
- * @s: string environment var
- *
- * Return: 1 for path, else 0
-*/
-int is_path(char *s)
+char **add_pwd_to_paths(char **env_paths, int total_paths)
 {
-	int i = 0;
-	char *p = "PATH";
+	int i = 0, match = 1;
+	char *pwd;
+	char **new_paths, *env_var;
 
-	while (s[i])
-	{
-		if (s[i] == '=')
-			return (1);
-		if (s[i] != p[i])
-			break;
-		i++;
-	}
-
-	return (0);
+	pwd = malloc((size_t)PATH_MAX);
+	getcwd(pwd, (size_t)PATH_MAX);
+	new_paths = malloc(sizeof(char **) * (total_paths + 2));
+	for (i = 0; i < total_paths; i++)
+		new_paths[i] = _strdup(env_paths[i]);
+	new_paths[i] = _strdup(pwd);
+	new_paths[i + 1] = NULL;
+	free_str_array(env_paths);
+	
+	return (new_paths);
 }
 
 /**
@@ -30,17 +26,30 @@ int is_path(char *s)
 */
 char **get_env_paths(void)
 {
-	int i = 0;
-	char *p = "PATH";
+	int i = 0, match = 1, pcount = 0;
 	char *path;
-	char **env_paths;
+	char **env_paths, *env_var;
 
 	/* loop through strings in envp to see if envp[i] is path */
 	/* once envp[i] == path, split string on ':' after '=' */
-	while (is_path(environ[i]) == 0)
-		i++;
+	for (i = 0; environ[i]; i++)
+	{
+		env_var = _strtok(environ[i], 0, '=');
+		match = _strcmp(env_var, "PATH");
+		free(env_var);
+		if (match == 0)
+			break;
+	}
 	path = environ[i] + 5;
+	for (i = 0; path[i]; i++)
+		pcount += path[i] == ':' ? 1 : 0;
+	/* count ':' in path string */
+	/* if count of ':' in string > len + 2 of env_paths, add PWD */
 	env_paths = _strtow(path, ':');
+	for (i = 0; env_paths[i]; i++)
+		;
+	if (i < pcount + 1)
+		return (add_pwd_to_paths(env_paths, i));
 	return (env_paths);
 }
 
@@ -58,8 +67,8 @@ char *get_command_path(cmd_t cmd)
 	char *cmd_path = NULL;
 	char *delim = "/";
 
-	/* if cmd.cmd starts with /, use as path w/out concat PATH */
-	if (cmd.cmd && cmd.cmd[0] == '/')
+	/* if cmd.cmd starts with i/, use as path w/out concat PATH */
+	if (cmd.cmd && _strchr(cmd.cmd, '/') != 0)
 		return (_strdup(cmd.cmd));
 	file_stat = malloc(sizeof(struct stat));
 	env_paths = get_env_paths();
@@ -73,7 +82,6 @@ char *get_command_path(cmd_t cmd)
 		i++;
 	}
 	free(file_stat);
-	free_str_array(env_paths);
 	if (found_file != 0)
 		return (NULL);
 	return (cmd_path);

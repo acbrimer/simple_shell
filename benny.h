@@ -31,7 +31,6 @@ int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
 /* parse_command.c */
 cmd_t *parse_command(char *cmd_str);
 /* get_command_path.c */
-int is_path(char *envp_str);
 char **get_env_paths(void);
 char *get_command_path(cmd_t cmd);
 /* get_command_fn.c */
@@ -57,8 +56,11 @@ char **free_str_array(char **arr);
 void free_cmd_t(cmd_t *cmd);
 /* strcmp.c */
 int _strcmp(char *s1, char *s2);
+/* strchr.c */
+int _strchr(char *s, char c);
 /* builtin.c */
 int builtin(cmd_t *cmd, char *cmdBuffer);
 void exitFunction(cmd_t *cmd, char *cmdBuffer);
 void printEnv(void);
+void _setenv(cmd_t *cmd);
 #endif
