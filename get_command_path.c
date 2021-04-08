@@ -58,6 +58,9 @@ char *get_command_path(cmd_t cmd)
 	char *cmd_path = NULL;
 	char *delim = "/";
 
+	/* if cmd.cmd starts with /, use as path w/out concat PATH */
+	if (cmd.cmd && cmd.cmd[0] == '/')
+		return (_strdup(cmd.cmd));
 	file_stat = malloc(sizeof(struct stat));
 	env_paths = get_env_paths();
 	while (env_paths[i])
