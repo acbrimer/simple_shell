@@ -88,18 +88,11 @@ char **_strtow(char *str, char delim)
 			l = 0;
 			tmp = _strtok(str, i, delim);
 			if (tmp == NULL)
-			{
-				free_str_array(res);
-				return (NULL);
-			}
-			while (tmp[l])
-				l++;
+				return (free_str_array(res));
+			l = _strlen(tmp);
 			res[r] = malloc(sizeof(char) * (l + 1));
 			if (res[r] == NULL)
-			{
-				free_str_array(res);
-				return (NULL);
-			}
+				return (free_str_array(res));
 			for (ii = 0; ii < l; ii++)
 				res[r][ii] = tmp[ii];
 			res[r][ii] = '\0';
@@ -111,6 +104,5 @@ char **_strtow(char *str, char delim)
 	res[r] = NULL;
 	if (res == NULL)
 		return (NULL);
-
 	return (res);
 }
