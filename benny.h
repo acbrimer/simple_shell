@@ -53,7 +53,7 @@ int _strlen(char *s);
 /* str_concat.c */
 char *str_concat(char *s1, char *s2, char *delim);
 /* free_mem_fns.c */
-void free_str_array(char **arr);
+char **free_str_array(char **arr);
 void free_cmd_t(cmd_t *cmd);
 /* strcmp.c */
 int _strcmp(char *s1, char *s2);
