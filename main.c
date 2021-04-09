@@ -4,11 +4,10 @@
  * main - runs shell in interactive and non interactive modes
  * @argc: number of args (voided)
  * @argv: arg values (voided)
- * @envp: array of environment vars (voided)
  *
  * Return: int always 0
 */
-int main(int argc, char **argv, char **envp)
+int main(int argc, char **argv)
 {
 	int check;
 	int interact_mode = isatty(STDIN_FILENO);

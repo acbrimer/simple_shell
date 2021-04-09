@@ -11,9 +11,9 @@
 
 char **add_pwd_to_paths(char **env_paths, int total_paths)
 {
-	int i = 0, match = 1;
+	int i = 0;
 	char *pwd;
-	char **new_paths, *env_var;
+	char **new_paths;
 
 	pwd = malloc((size_t)PATH_MAX);
 	getcwd(pwd, (size_t)PATH_MAX);
