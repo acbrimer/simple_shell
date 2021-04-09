@@ -1,11 +1,19 @@
 #include "benny.h"
 #include <limits.h>
 
+/**
+ * add_pwd_to_paths - if path has extra ':' add cwd
+ * @env_paths: existing string of path directories
+ * @total_paths: number of existing directories in path
+ *
+ * Return: new string with cwd added
+ */
+
 char **add_pwd_to_paths(char **env_paths, int total_paths)
 {
-	int i = 0, match = 1;
+	int i = 0;
 	char *pwd;
-	char **new_paths, *env_var;
+	char **new_paths;
 
 	pwd = malloc(PATH_MAX);
 	getcwd(pwd, PATH_MAX);
@@ -25,6 +33,7 @@ char **add_pwd_to_paths(char **env_paths, int total_paths)
  *
  * Return: array of paths
 */
+
 char **get_env_paths(void)
 {
 	int i = 0, match = 1, pcount = 0;
@@ -57,10 +66,12 @@ char **get_env_paths(void)
 /**
  * get_command_path - gets path for library functions if exists
  * @cmd: command struct
+ * @argv: name of program
  *
  * Return: path to command if exists, else null
 */
-char *get_command_path(cmd_t cmd)
+
+char *get_command_path(cmd_t cmd, char *argv)
 {
 	char **env_paths = NULL;
 	int i = 0, found_file;
@@ -84,6 +95,9 @@ char *get_command_path(cmd_t cmd)
 	}
 	free(file_stat);
 	if (found_file != 0)
+	{
+		errorNotFound(argv, cmd.cmd);
 		return (NULL);
+	}
 	return (cmd_path);
 }

@@ -1,5 +1,11 @@
 #include "benny.h"
 
+/**
+ * free_str_array - frees array of strings
+ * @arr: array to be freed
+ *
+ * Return: NULL
+ */
 
 char **free_str_array(char **arr)
 {
@@ -9,8 +15,13 @@ char **free_str_array(char **arr)
 		if (arr[i] != NULL)
 			free(arr[i]);
 	free(arr);
-	return (char **)(NULL);
+	return ((char **)(NULL));
 }
+
+/**
+ * free_cmd_t - frees command struct
+ * @cmd: struct to be freed
+ */
 
 void free_cmd_t(cmd_t *cmd)
 {

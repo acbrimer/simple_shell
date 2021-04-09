@@ -8,7 +8,6 @@
 */
 cmd_t *parse_command(char *cmd_str)
 {
-	int i = 1, a = 0;
 	char **cmd_arr = _strtow(cmd_str, ' ');
 	cmd_t *cmd = malloc(sizeof(cmd_t));
 
