@@ -17,15 +17,17 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 	{
 		for (x = 0; builtins[x]; x++)
 		{
-			if (_strcmp(cmd->cmd, builtins[0]) == 0)
-				exitFunction(cmd, cmdBuffer);
-			if (_strcmp(cmd->cmd, builtins[1]) == 0)
+			if (_strcmp(cmd->cmd, builtins[x]) == 0)
 			{
-				printEnv();
-				break;
+				if (x == 0)
+					exitFunction(cmd, cmdBuffer);
+				if (x == 1)
+				{
+					printEnv();
+					return (1);
+				}
 			}
 		}
-		return (1);
 	}
 	return (0);
 }
