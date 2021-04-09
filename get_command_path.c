@@ -65,9 +65,11 @@ char **get_env_paths(void)
 /**
  * get_command_path - gets path for library functions if exists
  * @cmd: command struct
+ * @argv: name of program
  *
  * Return: path to command if exists, else null
 */
+
 char *get_command_path(cmd_t cmd, char *argv)
 {
 	char **env_paths = NULL;
