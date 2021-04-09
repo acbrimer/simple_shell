@@ -1,5 +1,13 @@
 #include "benny.h"
 
+/**
+ * builtin - checks if given command is a built-in
+ * @cmd: command struct
+ * @cmdBuffer: given command string
+ *
+ * Return: 1 if builtin, 0 if not
+ */
+
 int builtin(cmd_t *cmd, char *cmdBuffer)
 {
 	char *builtins[] = {"exit", "env", NULL};
@@ -22,12 +30,22 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 	return (0);
 }
 
+/**
+ * exitFunction - frees and exits if command is exit
+ * @cmd: command struct
+ * @cmdBuffer: given command string
+ */
+
 void exitFunction(cmd_t *cmd, char *cmdBuffer)
 {
 	free_cmd_t(cmd);
 	free(cmdBuffer);
 	_exit(1);
 }
+
+/**
+ * printEnv - prints environ as built-in function
+ */
 
 void printEnv(void)
 {

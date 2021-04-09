@@ -1,6 +1,14 @@
 #include "benny.h"
 #include <limits.h>
 
+/**
+ * add_pwd_to_paths - if path has extra ':' add cwd
+ * @env_paths: existing string of path directories
+ * @total_paths: number of existing directories in path
+ *
+ * Return: new string with cwd added
+ */
+
 char **add_pwd_to_paths(char **env_paths, int total_paths)
 {
 	int i = 0, match = 1;
@@ -15,7 +23,7 @@ char **add_pwd_to_paths(char **env_paths, int total_paths)
 	new_paths[i] = _strdup(pwd);
 	new_paths[i + 1] = NULL;
 	free_str_array(env_paths);
-	
+
 	return (new_paths);
 }
 
@@ -24,6 +32,7 @@ char **add_pwd_to_paths(char **env_paths, int total_paths)
  *
  * Return: array of paths
 */
+
 char **get_env_paths(void)
 {
 	int i = 0, match = 1, pcount = 0;
