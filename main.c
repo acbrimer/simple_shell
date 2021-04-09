@@ -10,6 +10,7 @@
 int main(int argc, char **argv)
 {
 	int check;
+	int getline_ret;
 	int interact_mode = isatty(STDIN_FILENO);
 	size_t cmdBufferLen;
 	char *cmdBuffer = NULL;
@@ -21,9 +22,14 @@ int main(int argc, char **argv)
 	{
 		if (interact_mode)
 			printf("BENNY$ ");
-		cmdBufferLen = getline(&cmdBuffer, &cmdBufferLen, stdin);
-		log_cmd("log.txt", cmdBuffer, cmdBufferLen);
-		cmdBuffer[cmdBufferLen - 1] = '\0';
+		getline_ret = getline(&cmdBuffer, &cmdBufferLen, stdin);
+		if (getline_ret == EOF)
+		{
+			printf("\n");
+			_exit(1);
+		}
+		log_cmd("log.txt", cmdBuffer, getline_ret);
+		cmdBuffer[getline_ret - 1] = '\0';
 		cmd = parse_command(cmdBuffer);
 		check = builtin(cmd, cmdBuffer);
 		if (check == 0)
