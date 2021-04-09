@@ -32,7 +32,7 @@ int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
 cmd_t *parse_command(char *cmd_str);
 /* get_command_path.c */
 char **get_env_paths(void);
-char *get_command_path(cmd_t cmd, char *argv);
+char *get_command_path(cmd_t *cmd, char *argv);
 /* get_command_fn.c */
 int (*get_command_fn(cmd_t cmd))(cmd_t);
 /* execute_command.c */

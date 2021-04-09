@@ -9,18 +9,18 @@
 char *_getenv(const char *name)
 {
 	int i = 0, match = 1;
-	char *env_item, *env_val;
+	char **env_item, *env_val, *env_var = (char *)name;
 
 	for (i = 0; environ[i]; i++)
 	{
-		env_item = _strtok(environ[i], 0, '=');
-		if (_strcmp(env_item[0], name) == 0)
+		env_item = _strtow(environ[i], '=');
+		if (_strcmp(env_var, env_item[0]) == 0)
 		{
-			env_val = _strdup(env_item[1]);
-			free(env_item);
+			env_val = _strdup((char *)env_item[1]);
+			free_str_array(env_item);
 			return (env_val);
 		}
-		free(env_item);
+		free_str_array(env_item);
 	}
 	return (NULL);
 }
