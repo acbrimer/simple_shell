@@ -62,5 +62,7 @@ int _strchr(char *s, char c);
 int builtin(cmd_t *cmd, char *cmdBuffer);
 void exitFunction(cmd_t *cmd, char *cmdBuffer);
 void printEnv(void);
+/* getenv.c */
+char *_getenv(const char *name);
 void _setenv(cmd_t *cmd);
 #endif

@@ -7,15 +7,16 @@ char **add_pwd_to_paths(char **env_paths, int total_paths)
 	char *pwd;
 	char **new_paths, *env_var;
 
-	pwd = malloc((size_t)PATH_MAX);
-	getcwd(pwd, (size_t)PATH_MAX);
+	pwd = malloc(PATH_MAX);
+	getcwd(pwd, PATH_MAX);
 	new_paths = malloc(sizeof(char **) * (total_paths + 2));
-	for (i = 0; i < total_paths; i++)
+	for (i = 0; env_paths[i]; i++)
 		new_paths[i] = _strdup(env_paths[i]);
 	new_paths[i] = _strdup(pwd);
 	new_paths[i + 1] = NULL;
 	free_str_array(env_paths);
-	
+	free(pwd);
+
 	return (new_paths);
 }
 
