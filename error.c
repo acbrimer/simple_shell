@@ -12,5 +12,5 @@ void errorNotFound(char *argv, char *command)
 
 	message = str_concat(argv, command, ": ");
 	message = str_concat(message, "not found\n", ": ");
-	write(STDOUT_FILENO, message, _strlen(message));
+	write(STDERR_FILENO, message, _strlen(message));
 }
