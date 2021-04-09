@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 	cmd_t *cmd;
 
 	(void)argc;
-	(void)argv;
 
 	while (1)
 	{
@@ -28,7 +27,7 @@ int main(int argc, char **argv)
 		cmd = parse_command(cmdBuffer);
 		check = builtin(cmd, cmdBuffer);
 		if (check == 0)
-			execute_command(cmd);
+			execute_command(cmd, argv[0]);
 		free_cmd_t(cmd);
 		if (!interact_mode)
 			break;

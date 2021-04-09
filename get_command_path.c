@@ -68,7 +68,7 @@ char **get_env_paths(void)
  *
  * Return: path to command if exists, else null
 */
-char *get_command_path(cmd_t cmd)
+char *get_command_path(cmd_t cmd, char *argv)
 {
 	char **env_paths = NULL;
 	int i = 0, found_file;
@@ -92,6 +92,9 @@ char *get_command_path(cmd_t cmd)
 	}
 	free(file_stat);
 	if (found_file != 0)
+	{
+		errorNotFound(argv, cmd.cmd);
 		return (NULL);
+	}
 	return (cmd_path);
 }
