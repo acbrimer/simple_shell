@@ -14,7 +14,7 @@ int execute_command(cmd_t *cmd, char *argv)
 	pid_t pid;
 	int status, exec;
 
-	cmd_path = get_command_path(*cmd, argv);
+	cmd_path = get_command_path(cmd, argv);
 	if (cmd_path != NULL)
 	{
 		pid = fork();

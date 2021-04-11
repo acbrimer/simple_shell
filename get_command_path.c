@@ -8,11 +8,11 @@
  *
  * Return: new string with cwd added
  */
-char **add_pwd_to_paths(char **env_paths, int total_paths)
+char **add_pwd_to_paths(char **env_paths)
 {
 	int i = 0;
 	char *pwd;
-	char **new_paths;
+	char **new_paths = NULL;
 
 	pwd = _getenv("PWD");
 	for (i = 0; env_paths[i]; i++)
@@ -32,9 +32,9 @@ char **add_pwd_to_paths(char **env_paths, int total_paths)
 */
 char **get_env_paths(void)
 {
-	int i = 0, match = 1, pcount = 0;
+	int i = 0, pcount = 0;
 	char *path;
-	char **env_paths, *env_var;
+	char **env_paths = NULL;
 
 	path = _getenv("PATH");
 	for (i = 0; path[i]; i++)
@@ -45,7 +45,7 @@ char **get_env_paths(void)
 	for (i = 0; env_paths[i]; i++)
 		;
 	if (i < pcount + 1)
-		return (add_pwd_to_paths(env_paths, i));
+		return (add_pwd_to_paths(env_paths));
 	return (env_paths);
 }
 
