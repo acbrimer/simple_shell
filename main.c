@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 		if (getline_ret == EOF)
 		{
 			printf("\n");
-			_exit(1);
+			exit(0);
 		}
 		log_cmd("log.txt", cmdBuffer, getline_ret);
 		cmdBuffer[getline_ret - 1] = '\0';

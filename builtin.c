@@ -42,7 +42,7 @@ void exitFunction(cmd_t *cmd, char *cmdBuffer)
 {
 	free_cmd_t(cmd);
 	free(cmdBuffer);
-	_exit(1);
+	exit(-1);
 }
 
 /**

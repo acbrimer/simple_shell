@@ -8,7 +8,7 @@
 */
 char *_getenv(const char *name)
 {
-	int i = 0, match = 1;
+	int i = 0;
 	char **env_item, *env_val, *env_var = (char *)name;
 
 	for (i = 0; environ[i]; i++)
