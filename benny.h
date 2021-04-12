@@ -67,4 +67,6 @@ char *_getenv(const char *name);
 void _setenv(cmd_t *cmd);
 /* error.c */
 void errorNotFound(char *argv, char *command);
+/* replace_char.c */
+char *replace_char(char *str, char find, char replace);
 #endif
