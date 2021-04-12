@@ -1,0 +1,151 @@
+.\" Manpage for BENNY
+.\" Created by Adam Brimer and Rachel Lewis
+.TH "BENNY simple_shell" 1 "14 04 2021" "General Commands Manual 1.0" "simple_shell man page"
+.SH NAME
+B.E.N.N.Y. \- Best Ever iNteractive and Non Yes \- command interpreter (simple shell)
+.SH SYNOPSIS
+.P
+BENNY$ [command_string]
+.SH DESCRIPTION
+.P
+BENNY is a modified command interpreter for the system that executes commands read from standard input or echoed into the shell. This version has many features which makes it appear similar in some respects to the default SH shell, but it is not a SH or even BASH shell clone (see sh(1) or bash(1)). This man page is not intended to be a tutorial or complete specification of the shell.
+.SS
+Overview
+.P
+The BENNY shell is a command that reads lines from either a file or the terminal, interprets them, and executes other commands. It requires the user to select the shell, by compiling with "gcc -Wall -Werror -Wextra -pedantic *.c -o hsh". BENNY implements BASH lanuguage and has the advantage that its interpretive lanugage is common to both interactive and non-interactive use.
+.P
+In order to use interactively, first compile, then enter "./hsh" to launch the user prompt. At this point, the user will be in the BENNY shell and can enter commands as with any other shell. To use non-interactively, again compile, then "echo" the chosen command and pipe the command into BENNY with "./hsh". This is a one-time interaction with BENNY. See below for further implementation and use details.
+.SS
+Invocation
+.P
+BENNY must first be forked from "https://github.com/acbrimer/simple_shell.git" and compiled before usage. The command to compile BENNY is "gcc -Wall -Werror -Wextra -pedantic *.c -o hsh".
+.P
+BENNY's mode of operation can be differentiated as follows: interactive mode or non-interactive mode.
+.P
+If no arguments are present and the terminal is standard input, BENNY is considered to be in interactive mode and provides a prompt before user input. An interactive shell is any process that the user uses to type commands and receive output from those commands, meaning that it is a shell that the user can interact with. Each command is entered directly into the terminal. See below for examples of interactive mode operation.
+.P
+In non-interactive mode, BENNY cannot interact with the user. A non-interactive shell is most often run from a script or by echoing a command into the shell. A non-interactive shell opens only to execute a script and closes immediately once the script has terminated. See below for examples of non-interactive mode operation.
+.SS
+Lexical Structure
+.P
+BENNY reads input in terms of lines from an echo or the terminal, and breaks it up into words at whitespaces, either spaces or tabs. The user must enter input into BENNY with the "enter" key, which enters the command and ends the command string in a newline character "\\n" which signifies the end of input.
+.SS
+Commands
+.P
+When a line is read, the first word is assumed to be a simple command. Following words are assumed to be arguments or options.
+.SS
+Search and Execution
+.P
+There are three types of commands: builtin commands, shell functions, and normal programs. Each command is searched for by name in that order. Each is executed in a different way. See below for details.
+.SS
+Path Search
+.P
+When locating a command, BENNY searches each entry in the PATH for the command name. The value of the PATH variable should be a series of entries separated by a colon, where each entry consists of a directory name. The current directory may be indicated implicitly by an empty directory name, explicitly by a single period, or specifically added to the PATH by adding a colon to the PATH.
+.SS
+Command Exit Status
+.P
+Each command has an exit status that can influence the behavior of other shell commands. By convention, a command exits with 0 for success and non-zero for failure.
+.SH
+BUILTIN COMMANDS
+.P
+Builtin commands are executed internally to the shell without spawning a new process. The builtin commands are part of BENNY itself. They implement fuctionality that would be either impossible or just inconvenient to execute outside of the shell. These commands will always be available so they can be executed faster than other types of commands which are stored externally. BENNY currently includes two builtin commands: exit and env.
+.HP
+env
+.RS
+Displays the current environment.
+.RE
+.HP
+exit
+.RS
+Terminates the shell process.
+.RE
+.HP
+.SH
+SHELL FUNCTIONS
+.P
+Shell functions are executed in new environments which are created specifically for that singular purpose. When a shell function is executed, a child process is created. The child process separtes off from the existing (parent) process and actually executes the command. This loads the new program into the current process's memory in place of the previous program and does not return after success. BENNY's shell functions are identical to other shell functions. They can be identified by typing "which" before the command name. If the command specified is a shell function, its location will be displayed.
+.SH
+NORMAL PROGRAMS
+.P
+A normal program is an executable program that begins with the ASCII representation of a shebang "#!" To run an executable program in BENNY, enter the file name with a leading "./" which will cause BENNY to interpret the program in a subshell.
+.SH
+RETURN VALUE
+.P
+Errors that are detected by the shell, such as a syntax error, will cause BENNY to exit with a non-zero exit status. If the shell is in non-interactive mode, the execution of the shell file will be aborted. Otherwise BENNY will return the exit status of the last command executed.
+.SH
+ENVIRONMENT
+.P
+When a program is invoked, it is given an array of strings called the envionment.
+.P
+Environment parameters are dynamic values that affect the programs or processes running on a server. Each string in the array contains the name of the environment variable followed by "=" and the value. Environment variable names are typically upper case and are case-sensitive. Using the built-in command "env" will display the current environment.
+.P
+Common environment variables include:
+.HP
+PATH
+.RS
+The default search path for executable files. See the above section Path Search.
+.RE
+.HP
+_
+.RS
+The name of the program running. If compiled as directed, this will be ./hsh.
+.RE
+.HP
+PWD
+.RS
+The current working directory which is the default location for execution.
+.RE
+.SH
+EXAMPLES
+.P
+To display the current working directory while in interactive mode:
+.RS
+.P
+BENNY$ ls
+.RE
+.P
+To display the current working directory while outside of the shell in non-interactive mode:
+.RS
+.P
+$ echo "ls" | ./hsh
+.RE
+.P
+For the following executable program named "script" with user execution permissions:
+.RS
+.P
+#!/bin/bash
+.P
+ls
+.RE
+.P
+Display the current working directory via the above executable program by:
+.RS
+.P
+BENNY$ ./script
+.RE
+.P
+Exit the BENNY shell by:
+.RS
+.P
+BENNY$ : exit
+.SH
+FILES
+.HP
+/hsh
+.RS
+The BENNY shell executable file.
+.RE
+.SH
+AUTHORS
+.P
+Adam Brimer
+.P
+Rachel Lewis - 2708@holbertonschool.com
+.SH
+BUGS
+.P
+Probably, let's be real.
+.SH
+COLOPHON
+.P
+This page is part of a group project issued by Holberton School of Computer Science and Software Engineering.
