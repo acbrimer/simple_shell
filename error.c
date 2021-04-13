@@ -6,11 +6,15 @@
  * @command: command entered that does no exist
  */
 
-void errorNotFound(char *argv, char *command)
+int errorNotFound(char *argv, char *command)
 {
 	char *message;
+	char *message2;
 
 	message = str_concat(argv, command, ": ");
-	message = str_concat(message, "not found\n", ": ");
-	write(STDERR_FILENO, message, _strlen(message));
+	message2 = str_concat(message, "not found\n", ": ");
+	free(message);
+	write(STDERR_FILENO, message2, _strlen(message2));
+	free(message2);
+	return(1);
 }
