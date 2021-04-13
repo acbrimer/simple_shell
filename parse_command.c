@@ -8,10 +8,16 @@
 */
 cmd_t *parse_command(char *cmd_str)
 {
-	/* replace tabs (9 in ASCII) with spaces before splitting to array */
-	char **cmd_arr = _strtow(replace_char(cmd_str, 9, ' '), ' ');
+	char **cmd_arr = NULL;
 	cmd_t *cmd = malloc(sizeof(cmd_t));
 
+	/* replace tabs with spaces */
+	replace_char(cmd_str, 9, ' ');
+	/* skip leading spaces */
+	while (*cmd_str == ' ')
+		cmd_str++;
+	/* call strtow to split string to array on spaces */
+	cmd_arr = _strtow(cmd_str, ' ');
 	if (cmd == NULL)
 		return (NULL);
 	if (cmd_arr[0])
