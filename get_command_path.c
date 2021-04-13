@@ -4,7 +4,6 @@
 /**
  * add_pwd_to_paths - if path has extra ':' add cwd
  * @env_paths: existing string of path directories
- * @total_paths: number of existing directories in path
  *
  * Return: new string with cwd added
  */
