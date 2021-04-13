@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <errno.h>
 
 /**
  * struct cmd_s - holds parsed cmd
@@ -36,7 +37,7 @@ char *get_command_path(cmd_t *cmd, char *argv);
 /* get_command_fn.c */
 int (*get_command_fn(cmd_t cmd))(cmd_t);
 /* execute_command.c */
-int execute_command(cmd_t *cmd, char *argv);
+int execute_command(cmd_t *cmd, char *argv, char *cmdBuffer);
 void handle_command_error(cmd_t cmd);
 /* builtin_cd.c */
 void _cd(cmd_t cmd);
@@ -66,7 +67,7 @@ void printEnv(void);
 char *_getenv(const char *name);
 void _setenv(cmd_t *cmd);
 /* error.c */
-void errorNotFound(char *argv, char *command);
+int errorNotFound(char *argv, char *command);
 /* replace_char.c */
 char *replace_char(char *str, char find, char replace);
 #endif
