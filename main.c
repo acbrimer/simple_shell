@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 		cmd = parse_command(cmdBuffer);
 		check = builtin(cmd, cmdBuffer);
 		if (check == 0)
-			execute_command(cmd, argv[0]);
+			execute_command(cmd, argv[0], cmdBuffer);
 		free_cmd_t(cmd);
 		if (!interact_mode)
 			break;
