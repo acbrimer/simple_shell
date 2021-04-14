@@ -28,6 +28,8 @@ typedef struct cmd_s cmd_t;
 
 extern char **environ;
 extern int errno;
+extern char *exename;
+extern int linecounter;
 
 int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
 /* parse_command.c */
