@@ -30,7 +30,7 @@ int _wordcount(char *str, char delim)
 	int i, wc = 0;
 
 	for (i = 0; str[i] != '\0'; i++)
-		if (str[i] == delim && str[i - 1] != delim)
+		if (str[i] == delim && str[i - (i > 0 ? 1 : 0)] != delim)
 			wc++;
 
 	return (wc);

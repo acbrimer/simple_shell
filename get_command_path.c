@@ -59,7 +59,7 @@ char **add_pwd_to_paths(char *path, int pcount, char **env_paths)
 char **get_env_paths(void)
 {
 	int i = 0, pcount = 0;
-	char *path;
+	char *path = NULL;
 	char **env_paths = NULL;
 
 	path = _getenv("PATH");
@@ -110,10 +110,5 @@ char *get_command_path(cmd_t *cmd, char *argv)
 	}
 	free_str_array(env_paths);
 	free(file_stat);
-	if (found_file != 0)
-	{
-		errorNotFound(argv, cmd->cmd);
-		return (NULL);
-	}
 	return (cmd_path);
 }
