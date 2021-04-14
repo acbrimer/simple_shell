@@ -9,6 +9,7 @@
  *
  * Return: new string with cwd added
  */
+
 char **add_pwd_to_paths(char *path, int pcount, char **env_paths)
 {
 	int i = 0, added = 0, ix;
@@ -16,6 +17,8 @@ char **add_pwd_to_paths(char *path, int pcount, char **env_paths)
 	char **new_paths = NULL;
 
 	pwd = _getenv("PWD");
+	if (pwd == NULL)
+		return (NULL);
 	/* find position to add pwd path */
 	if (path[0] == ':')
 		ix = 0;
@@ -56,6 +59,7 @@ char **add_pwd_to_paths(char *path, int pcount, char **env_paths)
  *
  * Return: array of paths
 */
+
 char **get_env_paths(void)
 {
 	int i = 0, pcount = 0;
@@ -63,6 +67,8 @@ char **get_env_paths(void)
 	char **env_paths = NULL;
 
 	path = _getenv("PATH");
+	if (path == NULL)
+		return (NULL);
 	for (i = 0; path[i]; i++)
 		pcount += path[i] == ':' ? 1 : 0;
 	/* if count of ':' in string > len + 2 of env_paths, add PWD */
@@ -81,6 +87,7 @@ char **get_env_paths(void)
  *
  * Return: path to command if exists, else null
 */
+
 char *get_command_path(cmd_t *cmd)
 {
 	char **env_paths = NULL;
@@ -97,7 +104,14 @@ char *get_command_path(cmd_t *cmd)
 		return (cmd_path);
 	}
 	file_stat = malloc(sizeof(struct stat));
+	if (file_stat == NULL)
+		return (NULL);
 	env_paths = get_env_paths();
+	if (env_paths == NULL)
+	{
+		free(file_stat);
+		return (NULL);
+	}
 	while (env_paths[i])
 	{
 		if (i > 0)
