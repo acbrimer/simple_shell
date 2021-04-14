@@ -38,7 +38,7 @@ char *get_command_path(cmd_t *cmd);
 /* get_command_fn.c */
 int (*get_command_fn(cmd_t cmd))(cmd_t);
 /* execute_command.c */
-int execute_command(cmd_t *cmd, char *cmdBuffer);
+int execute_command(cmd_t *cmd, char *cmdBuffer, int linecounter, char *exename);
 void handle_command_error(cmd_t cmd);
 /* builtin_cd.c */
 void _cd(cmd_t cmd);
@@ -71,4 +71,7 @@ void _setenv(cmd_t *cmd);
 int errorNotFound(char *argv, char *command);
 /* replace_char.c */
 char *replace_char(char *str, char find, char replace);
+/* itoa.c */
+char *_itoa(int n);
+
 #endif

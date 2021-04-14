@@ -100,11 +100,12 @@ char *get_command_path(cmd_t *cmd)
 	env_paths = get_env_paths();
 	while (env_paths[i])
 	{
+		if (i > 0)
+			free(cmd_path);
 		cmd_path = str_concat(env_paths[i], cmd->cmd, delim);
 		found_file = stat(cmd_path, file_stat);
 		if (found_file == 0)
 			break;
-		free(cmd_path);
 		i++;
 	}
 	free_str_array(env_paths);
