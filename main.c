@@ -34,7 +34,6 @@ int main(__attribute((unused))int argc, char **argv)
 	size_t cmdBufferLen;
 	char *cmdBuffer = NULL;
 	cmd_t *cmd;
-	char *exename = argv[0];
 	int linecounter = 0;
 
 	while (1)
@@ -53,7 +52,7 @@ int main(__attribute((unused))int argc, char **argv)
 			cmd = parse_command((cmdBuffer + i));
 			check = builtin(cmd, (cmdBuffer + i));
 			if (check == 0)
-				execute_command(cmd, argv[0], (cmdBuffer + i));
+				execute_command(cmd, (cmdBuffer + i));
 			free_cmd_t(cmd);
 			linecounter++;
 			if (mode)
