@@ -3,24 +3,51 @@
 
 /**
  * add_pwd_to_paths - if path has extra ':' add cwd
+ * @path: path string
+ * @pcount: number of paths
  * @env_paths: existing string of path directories
  *
  * Return: new string with cwd added
  */
-char **add_pwd_to_paths(char **env_paths)
+char **add_pwd_to_paths(char *path, int pcount, char **env_paths)
 {
-	int i = 0;
+	int i = 0, added = 0, ix;
 	char *pwd;
 	char **new_paths = NULL;
 
 	pwd = _getenv("PWD");
-	for (i = 0; env_paths[i]; i++)
-		new_paths[i] = _strdup(env_paths[i]);
-	new_paths[i] = _strdup(pwd);
-	new_paths[i + 1] = NULL;
+	/* find position to add pwd path */
+	if (path[0] == ':')
+		ix = 0;
+	else if (path[_strlen(path) - 1] == ':')
+		ix = pcount - 1;
+	/* if pwd is not first or last path, find index */
+	else
+	{
+		for (i = 1, ix = 1; path[i]; i++)
+			if (path[i] == ':')
+			{
+				if (path[i + 1] == ':')
+					break;
+				ix++;
+			}
+	}
+	new_paths = malloc(sizeof(char *) * (pcount + 1));
+	/* add paths to new_path */
+	for (i = 0; i < pcount; i++)
+	{
+		if (i == ix)
+		{
+			new_paths[i] = _strdup(pwd);
+			added = 1;
+		}
+		else
+			new_paths[i] = _strdup(env_paths[i - added]);
+	}
+	new_paths[i] = NULL;
 	free_str_array(env_paths);
 	free(pwd);
-
+	free(path);
 	return (new_paths);
 }
 
@@ -40,11 +67,11 @@ char **get_env_paths(void)
 		pcount += path[i] == ':' ? 1 : 0;
 	/* if count of ':' in string > len + 2 of env_paths, add PWD */
 	env_paths = _strtow(path, ':');
-	free(path);
 	for (i = 0; env_paths[i]; i++)
 		;
 	if (i < pcount + 1)
-		return (add_pwd_to_paths(env_paths));
+		return (add_pwd_to_paths(path, pcount, env_paths));
+	free(path);
 	return (env_paths);
 }
 
