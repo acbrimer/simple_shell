@@ -34,18 +34,17 @@ int check_file_exists(char *path)
 /**
  * execute_command - determines type of cmd and executes or logs error
  * @cmd: command struct
- * @argv: name of program
  * @cmdBuffer: command buffer
  *
  * Return: 0 if successful
 */
-int execute_command(cmd_t *cmd, char *argv, char *cmdBuffer)
+int execute_command(cmd_t *cmd, char *cmdBuffer)
 {
 	char *cmd_path;
 	pid_t pid;
 	int status, exec;
 
-	cmd_path = get_command_path(cmd, argv);
+	cmd_path = get_command_path(cmd);
 	if (check_file_exists(cmd_path) == 0)
 	{
 		write(STDOUT_FILENO, "file not found :(\n", 18);
