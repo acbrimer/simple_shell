@@ -101,7 +101,10 @@ __Insert here__
 #### log_command.c
 - Prototypes:
   - int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
-
+#### free_mem_fns.c
+- Prototypes:
+  - char **free_str_array(char **arr);
+  - void free_cmd_t(cmd_t *cmd);
 
 ### Builtin Functions
 

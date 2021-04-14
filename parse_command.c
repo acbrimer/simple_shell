@@ -6,6 +6,7 @@
  *
  * Return: new cmd_t struct with info from string
 */
+
 cmd_t *parse_command(char *cmd_str)
 {
 	char **cmd_arr = NULL;
@@ -16,7 +17,7 @@ cmd_t *parse_command(char *cmd_str)
 	/* skip leading spaces */
 	while (*cmd_str == ' ')
 		cmd_str++;
-	/* call strtow to split string to array on spaces */
+	/* split string into array on spaces */
 	cmd_arr = _strtow(cmd_str, ' ');
 	if (cmd == NULL)
 		return (NULL);
@@ -26,4 +27,23 @@ cmd_t *parse_command(char *cmd_str)
 	cmd->args = cmd_arr;
 
 	return (cmd);
+}
+
+/**
+ * replace_char - replaces find char with replace char in str
+ * @str: string to replace chars
+ * @find: char to find
+ * @replace: char to replace find
+ *
+ * Return: pointer to string with replaced char
+ */
+
+char *replace_char(char *str, char find, char replace)
+{
+	int i;
+
+	for (i = 0; str[i]; i++)
+		if (str[i] == find)
+			str[i] = replace;
+	return (str);
 }
