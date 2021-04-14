@@ -33,6 +33,14 @@ int check_file_exists(char *path)
 }
 
 
+/**
+ * file_not_found_error - prints error for file not found
+ * @cmd: command struct
+ * @linecounter: current line in shell
+ * @exename: name of shell
+ *
+ * Return: int error code
+*/
 int file_not_found_error(cmd_t *cmd, int linecounter, char *exename)
 {
 	char *message, *err = "not found\n", *lcstr;
@@ -65,10 +73,12 @@ int file_not_found_error(cmd_t *cmd, int linecounter, char *exename)
  * execute_command - determines type of cmd and executes or logs error
  * @cmd: command struct
  * @cmdBuffer: command buffer
+ * @linec: linecounter from main
+ * @exename: argv[0]
  *
  * Return: 0 if successful
 */
-int execute_command(cmd_t *cmd, char *cmdBuffer, int linecounter, char *exename)
+int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 {
 	char *cmd_path;
 	pid_t pid;
@@ -77,8 +87,8 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linecounter, char *exename)
 	cmd_path = get_command_path(cmd);
 	if (check_file_exists(cmd_path) == 0)
 	{
-		free(cmd_path);	
-		return (file_not_found_error(cmd, linecounter, exename));
+		free(cmd_path);
+		return (file_not_found_error(cmd, linec, exename));
 	}
 	if (cmd_path != NULL)
 	{
