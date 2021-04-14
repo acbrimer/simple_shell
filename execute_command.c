@@ -4,8 +4,9 @@
  * execute_command - determines type of cmd and executes or logs error
  * @cmd: command struct
  * @argv: name of program
+ * @cmdBuffer: command buffer
  *
- * Return: 1 for success
+ * Return: 0 if successful
 */
 
 int execute_command(cmd_t *cmd, char *argv, char *cmdBuffer)
@@ -48,5 +49,5 @@ int execute_command(cmd_t *cmd, char *argv, char *cmdBuffer)
 		}
 		free(cmd_path);
 	}
-	return (1);
+	return (0);
 }
