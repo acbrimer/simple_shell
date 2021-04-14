@@ -1,6 +1,27 @@
 #include "benny.h"
 
 /**
+ * check_linelen - handler function to check getline return for EOF/error
+ * @exename: name of exe
+ * @cmdBuffer: command buffer pointer
+ * @mode: interactive mode
+ * @linelen: linelen returned from getline
+*/
+void check_linelen(char *exename, char *cmdBuffer, int mode, int linelen)
+{
+	int errnum = 0;
+
+	if (mode && linelen == -1)
+	{
+		errnum = errno;
+		write(STDOUT_FILENO, "\n", 1);
+		free(cmdBuffer);
+		if (errnum == 2)
+			exit(0);
+		perror(exename), exit(errnum);
+	}
+}
+/**
  * main - runs shell in interactive and non interactive modes
  * @argc: number of args (voided)
  * @argv: arg values (voided)
@@ -9,10 +30,12 @@
 */
 int main(__attribute((unused))int argc, char **argv)
 {
-	int check, errnum = 0, linelen = 0, i = 0, mode = isatty(STDIN_FILENO);
+	int check, linelen = 0, i = 0, mode = isatty(STDIN_FILENO);
 	size_t cmdBufferLen;
 	char *cmdBuffer = NULL;
 	cmd_t *cmd;
+	char *exename = argv[0];
+	int linecounter = 0;
 
 	while (1)
 	{
@@ -32,18 +55,12 @@ int main(__attribute((unused))int argc, char **argv)
 			if (check == 0)
 				execute_command(cmd, argv[0], (cmdBuffer + i));
 			free_cmd_t(cmd);
+			linecounter++;
 			if (mode)
 				write(STDOUT_FILENO, "BENNY$ ", 7);
 		}
-		if (mode && linelen == -1)
-		{
-			errnum = errno;
-			write(STDOUT_FILENO, "\n", 1);
-			free(cmdBuffer);
-			if (errnum == 2)
-				exit(0);
-			perror(argv[0]), exit(errnum);
-		}
+		/* helper function to free up lines in main */
+		check_linelen(argv[0], cmdBuffer, mode, linelen);
 		if (!mode)
 			break;
 	}
