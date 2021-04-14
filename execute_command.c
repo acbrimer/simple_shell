@@ -31,6 +31,36 @@ int check_file_exists(char *path)
 	free(file_stat);
 	return (found_file == 0 ? 1 : 0);
 }
+
+
+int file_not_found_error(cmd_t *cmd, int linecounter, char *exename)
+{
+	char *message, *err = "not found\n", *lcstr;
+	int i, t;
+
+	lcstr = _itoa(linecounter);
+	message = malloc(_strlen(exename) + _strlen(lcstr) + _strlen(cmd->cmd) + 17);
+	for (i = 0, t = 0; exename[i]; i++, t++)
+		message[t] = exename[i];
+	message[t++] = ':';
+	message[t++] = ' ';
+	for (i = 0; lcstr[i]; i++, t++)
+		message[t] = lcstr[i];
+	message[t++] = ':';
+	message[t++] = ' ';
+	for (i = 0; cmd->cmd[i]; i++, t++)
+		message[t] = cmd->cmd[i];
+	message[t++] = ':';
+	message[t++] = ' ';
+	for (i = 0; err[i]; i++, t++)
+		message[t] = err[i];
+	message[t++] = '\0';
+	write(STDOUT_FILENO, message, _strlen(message));
+	free(lcstr);
+	free(message);
+
+	return (0);
+}
 /**
  * execute_command - determines type of cmd and executes or logs error
  * @cmd: command struct
@@ -38,7 +68,7 @@ int check_file_exists(char *path)
  *
  * Return: 0 if successful
 */
-int execute_command(cmd_t *cmd, char *cmdBuffer)
+int execute_command(cmd_t *cmd, char *cmdBuffer, int linecounter, char *exename)
 {
 	char *cmd_path;
 	pid_t pid;
@@ -47,8 +77,8 @@ int execute_command(cmd_t *cmd, char *cmdBuffer)
 	cmd_path = get_command_path(cmd);
 	if (check_file_exists(cmd_path) == 0)
 	{
-		write(STDOUT_FILENO, "file not found :(\n", 18);
-		return (0);
+		free(cmd_path);	
+		return (file_not_found_error(cmd, linecounter, exename));
 	}
 	if (cmd_path != NULL)
 	{
