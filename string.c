@@ -1,3 +1,5 @@
+#include "benny.h"
+
 /**
  * str_concat - allocates new memory to concat strings
  * @s1: first string
