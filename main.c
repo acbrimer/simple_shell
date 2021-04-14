@@ -7,20 +7,20 @@
  *
  * Return: int always 0
 */
-int main(int argc, char **argv)
+int main(__attribute((unused))int argc, char **argv)
 {
 	int check, errnum = 0, linelen = 0, i = 0, mode = isatty(STDIN_FILENO);
 	size_t cmdBufferLen;
 	char *cmdBuffer = NULL;
 	cmd_t *cmd;
 
-	(void)argc;
 	while (1)
 	{
 		if (mode)
 			write(STDOUT_FILENO, "BENNY$ ", 7);
 		while ((linelen = getline(&cmdBuffer, &cmdBufferLen, stdin)) != -1)
 		{
+			i = 0;
 			while (cmdBuffer[i] == ' ')
 				i++;
 			if (linelen - i == 1)
