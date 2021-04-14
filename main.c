@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		if (mode)
-			printf("BENNY$ ");
+			write(STDOUT_FILENO, "BENNY$ ", 7);
 		while ((linelen = getline(&cmdBuffer, &cmdBufferLen, stdin)) != -1)
 		{
 			while (cmdBuffer[i] == ' ')
@@ -33,12 +33,12 @@ int main(int argc, char **argv)
 				execute_command(cmd, argv[0], (cmdBuffer + i));
 			free_cmd_t(cmd);
 			if (mode)
-				printf("BENNY$ ");
+				write(STDOUT_FILENO, "BENNY$ ", 7);
 		}
 		if (mode && linelen == -1)
 		{
 			errnum = errno;
-			printf("\n");
+			write(STDOUT_FILENO, "\n", 1);
 			free(cmdBuffer);
 			if (errnum == 2)
 				exit(0);
