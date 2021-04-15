@@ -62,17 +62,58 @@ $
 
 ## Examples
 
-__Insert here__
+__Interactive__
+
+Run a command with:
+```
+$ ./hsh
+BENNY$ ls
+a.out    builtin.c          free_mem_fns.c      log_command.c  man_1_simple_shell  string.c
+AUTHORS  error.c            get_command_path.c  log.txt        parse_command.c     strtow.c
+benny.h  execute_command.c  getenv.c            main.c         README.md
+BENNY$
+```
+
+Include the path with:
+```
+$ ./hsh
+BENNY$ /bin/cat hello
+Hello!
+BENNY$
+```
+
+__Non-Interactive__
+
+Pipe a command into BENNY with:
+```
+$ echo "ls" | ./hsh
+a.out    builtin.c          free_mem_fns.c      log_command.c  man_1_simple_shell  string.c
+AUTHORS  error.c            get_command_path.c  log.txt        parse_command.c     strtow.c
+benny.h  execute_command.c  getenv.c            main.c         README.md
+$
+```
+
+Use multi-line commands:
+```
+$ echo "ls
+> ls -a" | ./hsh
+a.out    builtin.c          free_mem_fns.c      log_command.c  man_1_simple_shell  string.c
+AUTHORS  error.c            get_command_path.c  log.txt        parse_command.c     strtow.c
+benny.h  execute_command.c  getenv.c            main.c         README.md
+.      AUTHORS    error.c            get_command_path.c  .gitignore     main.c              README.md
+..     benny.h    execute_command.c  getenv.c            log_command.c  man_1_simple_shell  string.c
+a.out  builtin.c  free_mem_fns.c     .git                log.txt        parse_command.c     strtow.c
+$
+```
 
 ## Features
 
-- Zero memory leaks (hopefully)
+- Zero memory leaks
 - Custom env builtin command
-- Custom exit builtin command __equipped to handle arguments__ (?)
+- Custom exit builtin command
 - Custom _getenv function
 - Custom _strtok function
 - Custom _setenv and _unsetenv functions (?)
-- Custom _cd function to change working directory (?)
 - Ctrl-D exits the program
 - Ctrl-C does not exit (?)
 
@@ -82,6 +123,7 @@ __Insert here__
 
 ##### main.c
 - Prototypes:
+  - void check_linelen(char *exename, char *cmdBuffer, int mode, int linelen);
   - int main(int argc, char **argv);
 #### parse_command.c
 - Prototypes:
@@ -113,6 +155,9 @@ __Insert here__
   - int builtin(cmd_t *cmd, char *cmdBuffer);
   - void exitFunction(cmd_t *cmd, char *cmdBuffer);
   - void printEnv(void);
+#### getenv.c
+- Prototypes:
+  - char *_getenv(const char *name);
 
 ### Helper Functions
 

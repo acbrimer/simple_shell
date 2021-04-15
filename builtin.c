@@ -17,7 +17,7 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 	{
 		for (x = 0; builtins[x]; x++)
 		{
-			if (_strcmp(cmd->cmd, builtins[x]) == 0)
+			if (_strcmp(builtins[x], cmd->cmd) == 0)
 			{
 				if (x == 0)
 					exitFunction(cmd, cmdBuffer);
