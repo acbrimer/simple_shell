@@ -76,7 +76,5 @@ int main(__attribute((unused))int argc, char **argv)
 			break;
 	}
 	free(cmdBuffer);
-	if (errno > 5)
-		return (errno);
 	return (0);
 }
