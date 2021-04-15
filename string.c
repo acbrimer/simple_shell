@@ -82,6 +82,16 @@ int _strcmp(char *s1, char *s2)
 			break;
 		}
 	}
+	if (comp != 0)
+		return (comp);
+	for (x = 0; s2[x] != '\0'; x++)
+	{
+		if (s2[x] != s1[x])
+		{
+			comp = (s2[x] - s1[x]);
+			break;
+		}
+	}
 	return (comp);
 }
 
