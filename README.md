@@ -93,7 +93,7 @@ benny.h  execute_command.c  getenv.c            main.c         README.md
 $
 ```
 
-Use multi-line commands:
+Use multi-line commands with:
 ```
 $ echo "ls
 > ls -a" | ./hsh
@@ -113,9 +113,7 @@ $
 - Custom exit builtin command
 - Custom _getenv function
 - Custom _strtok function
-- Custom _setenv and _unsetenv functions (?)
 - Ctrl-D exits the program
-- Ctrl-C does not exit (?)
 
 ## Structure
 
