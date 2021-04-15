@@ -42,8 +42,7 @@ char **add_pwd_to_paths(char *path, int pcount, char **env_paths);
 int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename);
 int check_file_exists(char *path);
 void free_cmd_vars(cmd_t *cmd, char *cmd_path, char *cmdBuffer);
-int permission_denied_error(cmd_t *cmd, int linecounter, char *exename);
-int file_not_found_error(cmd_t *cmd, int linecounter, char *exename);
+int f_error(char *err, int eno, cmd_t *cmd, int linec, char *exe, char *path);
 /* setenv.c */
 int _unsetenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
