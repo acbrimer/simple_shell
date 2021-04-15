@@ -47,6 +47,12 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 	return (0);
 }
 
+/**
+ * cdFunction - changes working directory
+ * @cmd: command struct
+ * @cmdBuffer: given command string
+ */
+
 void cdFunction(cmd_t *cmd, char *cmdBuffer)
 {
 	char cwd[1000], *target;
