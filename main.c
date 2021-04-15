@@ -29,6 +29,7 @@ void check_linelen(char *exename, char *cmdBuffer, int mode, int linelen)
 void sigint_handler(int sig)
 {
 	(void)sig;
+	write(STDOUT_FILENO, "\nBENNY$ ", 8);
 }
 
 /**
