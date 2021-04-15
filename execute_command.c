@@ -32,7 +32,38 @@ int check_file_exists(char *path)
 	return (found_file == 0 ? 1 : 0);
 }
 
+/**
+ * permission_denied_error - prints error for permission denied
+ * @cmd: command struct
+ * @linecounter: current line in shell
+ * @exename: name of shell
+ *
+ * Return: int error code
+*/
+int permission_denied_error(cmd_t *cmd, int linecounter, char *exename)
+{
+	char *message, *lcstr;
+	int i, t;
 
+	lcstr = _itoa(linecounter);
+	message = malloc(_strlen(exename) + _strlen(lcstr) + _strlen(cmd->cmd) + 5);
+	for (i = 0, t = 0; exename[i]; i++, t++)
+		message[t] = exename[i];
+	message[t++] = ':';
+	message[t++] = ' ';
+	for (i = 0; lcstr[i]; i++, t++)
+		message[t] = lcstr[i];
+	message[t++] = ':';
+	message[t++] = ' ';
+	for (i = 0; cmd->cmd[i]; i++, t++)
+		message[t] = cmd->cmd[i];
+	message[t] = '\0';
+	perror(message);
+	free(message);
+	free(lcstr);
+	errno = 126;
+	return (errno);
+}
 /**
  * file_not_found_error - prints error for file not found
  * @cmd: command struct
@@ -66,8 +97,8 @@ int file_not_found_error(cmd_t *cmd, int linecounter, char *exename)
 	write(STDERR_FILENO, message, _strlen(message));
 	free(lcstr);
 	free(message);
-
-	return (0);
+	errno = 127;
+	return (errno);
 }
 /**
  * execute_command - determines type of cmd and executes or logs error
@@ -104,9 +135,8 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 			exec = execve(cmd_path, cmd->args, environ);
 			if (exec == -1)
 			{
-				perror("Error in execve");
 				free(cmd_path);
-				return (errno);
+				return (permission_denied_error(cmd, linec, exename));
 			}
 		}
 		else
