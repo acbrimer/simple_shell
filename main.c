@@ -60,7 +60,7 @@ int main(__attribute((unused))int argc, char **argv)
 				i++;
 			if (linelen - i == 1)
 				break;
-			log_cmd("log.txt", (cmdBuffer + i), linelen - i);
+			/* log_cmd("log.txt", (cmdBuffer + i), linelen - i); */
 			cmdBuffer[linelen - 1] = '\0';
 			cmd = parse_command((cmdBuffer + i));
 			check = builtin(cmd, (cmdBuffer + i));

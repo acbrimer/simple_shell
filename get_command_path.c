@@ -63,19 +63,13 @@ char **add_pwd_to_paths(char *path, int pcount, char **env_paths)
 char **get_env_paths(void)
 {
 	int i = 0, pcount = 0;
-	char *path = NULL, *pwd = NULL;
+	char *path = NULL;
 	char **env_paths = NULL;
 
 	path = _getenv("PATH");
 	/* fix to use pwd if PATH is null */
 	if (path == NULL)
-	{
-		pwd = _getenv("PWD");
-		env_paths = malloc(sizeof(char *) * 2);
-		env_paths[0] = pwd;
-		env_paths[1] = NULL;
-		return (env_paths);
-	}
+		return (NULL);
 	for (i = 0; path[i]; i++)
 		pcount += path[i] == ':' ? 1 : 0;
 	/* if count of ':' in string > len + 2 of env_paths, add PWD */
