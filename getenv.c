@@ -11,19 +11,16 @@ char *_getenv(const char *name)
 	int i = 0;
 	char **env_item, *env_val, *env_var = (char *)name;
 
-	printf("getenv: %s\n", env_var);
 	for (i = 0; environ[i]; i++)
 	{
 		env_item = _strtow(environ[i], '=');
 		if (_strcmp(env_var, env_item[0]) == 0)
 		{
-			printf("match! env_item[0] = %s\n", env_item[0]);
 			env_val = _strdup(env_item[1]);
 			free_str_array(env_item);
 			return (env_val);
 		}
 		free_str_array(env_item);
 	}
-	printf("no env var\n");
 	return (NULL);
 }
