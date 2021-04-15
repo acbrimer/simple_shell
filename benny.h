@@ -72,5 +72,14 @@ void free_cmd_t(cmd_t *cmd);
 int builtin(cmd_t *cmd, char *cmdBuffer);
 void exitFunction(cmd_t *cmd, char *cmdBuffer);
 void printEnv(void);
+/* getenv.c */
+char *_getenv(const char *name);
+/* error.c */
+int errorNotFound(char *argv, char *command);
+/* replace_char.c */
+char *replace_char(char *str, char find, char replace);
+/* itoa.c */
+char *_itoa(int n);
+int _atoi(char *s);
 
 #endif
