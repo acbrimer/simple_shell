@@ -126,7 +126,10 @@ char *get_command_path(cmd_t *cmd)
 		cmd_path = str_concat(env_paths[i], cmd->cmd, delim);
 		found_file = stat(cmd_path, file_stat);
 		if (found_file == 0)
+		{
+			errno = 0;
 			break;
+		}
 		i++;
 	}
 	free_str_array(env_paths);

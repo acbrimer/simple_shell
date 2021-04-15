@@ -47,6 +47,7 @@ int main(__attribute((unused))int argc, char **argv)
 	cmd_t *cmd;
 	int linecounter = 1;
 
+	errno = 0;
 	signal(SIGINT, sigint_handler);
 	while (1)
 	{
@@ -76,5 +77,5 @@ int main(__attribute((unused))int argc, char **argv)
 			break;
 	}
 	free(cmdBuffer);
-	return (0);
+	return (mode ? 0 : errno);
 }
