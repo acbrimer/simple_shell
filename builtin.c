@@ -28,12 +28,12 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 				}
 				if (x == 2)
 				{
-					setenv(cmd->args[1], cmd->args[2], 1);
+					_setenv(cmd->args[1], cmd->args[2], 1);
 					return (1);
 				}
 				if (x == 3)
 				{
-					unsetenv(cmd->args[1]);
+					_unsetenv(cmd->args[1]);
 					return (1);
 				}
 			}

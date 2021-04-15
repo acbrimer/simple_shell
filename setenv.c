@@ -86,10 +86,10 @@ int _setenv(const char *n, const char *val, int overwrite)
 		return (-1);
 	for (i = 0, ii = 0; n[i]; i++, ii++)
 		ev[ii] = n[i];
-	ev[ii] = '=';
-	ii++;
+	ev[ii++] = '=';
 	for (i = 0; val[i]; i++, ii++)
 		ev[ii] = val[i];
+	ev[ii] = '\0';
 	res = putenv(ev);
 	return ((res != 0) ? -1 : 0);
 }
