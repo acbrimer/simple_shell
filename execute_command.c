@@ -63,7 +63,7 @@ int file_not_found_error(cmd_t *cmd, int linecounter, char *exename)
 	for (i = 0; err[i]; i++, t++)
 		message[t] = err[i];
 	message[t++] = '\0';
-	write(STDOUT_FILENO, message, _strlen(message));
+	write(STDERR_FILENO, message, _strlen(message));
 	free(lcstr);
 	free(message);
 
