@@ -38,7 +38,7 @@ char *get_command_path(cmd_t *cmd);
 /* get_command_fn.c */
 int (*get_command_fn(cmd_t cmd))(cmd_t);
 /* execute_command.c */
-int execute_command(cmd_t *cmd, char *cmdBuffer, int linecounter, char *exename);
+int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename);
 void handle_command_error(cmd_t cmd);
 /* builtin_cd.c */
 void _cd(cmd_t cmd);
