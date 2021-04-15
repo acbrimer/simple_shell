@@ -60,6 +60,15 @@ exit
 Terminates the shell process.
 .RE
 .HP
+_setenv
+.RS
+Sets a variable in the environment.
+.RE
+.HP
+_unsetenv
+.RS
+Unsets a variable in the environment.
+.RE
 .SH
 SHELL FUNCTIONS
 .P
@@ -110,7 +119,7 @@ To display the current working directory while outside of the shell in non-inter
 $ echo "ls" | ./hsh
 .RE
 .P
-Display the current working directory via the above executable program by:
+To execute a command via an executable program:
 .RS
 .P
 BENNY$ ./script

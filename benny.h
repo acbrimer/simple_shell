@@ -17,20 +17,20 @@
  *
  * Description: holds all info for a parsed cmd
 */
-struct cmd_s
+
+typedef struct cmd_s
 {
 	char *cmd;
 	char **args;
 	int out_fd;
-};
-
-typedef struct cmd_s cmd_t;
+} cmd_t;
 
 extern char **environ;
 extern int errno;
 
 /* main.c */
 void check_linelen(char *exename, char *cmdBuffer, int mode, int linelen);
+void sigint_handler(int sig);
 /* log_command.c */
 int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
 /* parse_command.c */
