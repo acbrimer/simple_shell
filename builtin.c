@@ -10,7 +10,7 @@
 
 int builtin(cmd_t *cmd, char *cmdBuffer)
 {
-	char *builtins[] = {"exit", "env", NULL};
+	char *builtins[] = {"exit", "env", "setenv", "unsetenv", NULL};
 	int x;
 
 	if (builtins[0])
@@ -24,6 +24,16 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 				if (x == 1)
 				{
 					printEnv();
+					return (1);
+				}
+				if (x == 2)
+				{
+					setenv(cmd->args[1], cmd->args[2], 1);
+					return (1);
+				}
+				if (x == 3)
+				{
+					unsetenv(cmd->args[1]);
 					return (1);
 				}
 			}
