@@ -76,5 +76,5 @@ int main(__attribute((unused))int argc, char **argv)
 			break;
 	}
 	free(cmdBuffer);
-	return (0);
+	return (mode ? 0 : errno);
 }
