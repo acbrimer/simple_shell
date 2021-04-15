@@ -110,13 +110,13 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 		{
 			exec = execve(cmd_path, cmd->args, environ);
 			if (exec == -1)
-				return (f_error(err_xok, 2, cmd, linec, exename, cmd_path));
+				return (errno);
 		}
 		else
 		{
 			waitpid(pid, &status, 0);
 			free(cmd_path);
-			if (WIFEXITED(status))
+			if (WIFEXITED(&status))
 				return (WEXITSTATUS(status));
 		}
 		free(cmd_path);
