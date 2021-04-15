@@ -66,7 +66,7 @@ char **free_str_array(char **arr);
 void free_cmd_t(cmd_t *cmd);
 /* builtin.c */
 int builtin(cmd_t *cmd, char *cmdBuffer);
-void cdFunction(cmd_t *cmd);
+void cdFunction(cmd_t *cmd, char *cmdBuffer);
 void exitFunction(cmd_t *cmd, char *cmdBuffer);
 void printEnv(void);
 /* getenv.c */
