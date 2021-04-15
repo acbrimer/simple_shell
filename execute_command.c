@@ -119,7 +119,7 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 	if (check_file_exists(cmd_path) == 0)
 	{
 		free(cmd_path);
-		exit (file_not_found_error(cmd, linec, exename));
+		return (file_not_found_error(cmd, linec, exename));
 	}
 	if (cmd_path != NULL)
 	{
@@ -128,7 +128,7 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 		{
 			perror(cmd->cmd);
 			free_cmd_vars(cmd, cmd_path, cmdBuffer);
-			exit (errno);
+			return (errno);
 		}
 		else if (pid == 0)
 		{
@@ -136,7 +136,7 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 			if (exec == -1)
 			{
 				free(cmd_path);
-				exit (permission_denied_error(cmd, linec, exename));
+				return (permission_denied_error(cmd, linec, exename));
 			}
 		}
 		else
