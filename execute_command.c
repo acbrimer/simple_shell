@@ -116,7 +116,7 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 		{
 			waitpid(pid, &status, 0);
 			free(cmd_path);
-			if (WIFEXITED(&status))
+			if (WIFEXITED(status))
 				return (WEXITSTATUS(status));
 		}
 		free(cmd_path);
