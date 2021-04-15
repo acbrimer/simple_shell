@@ -33,54 +33,25 @@ int check_file_exists(char *path)
 }
 
 /**
- * permission_denied_error - prints error for permission denied
+ * f_error - handles errors for files
+ * @err: error message
+ * @eno: error number
  * @cmd: command struct
- * @linecounter: current line in shell
- * @exename: name of shell
+ * @linec: current line in shell
+ * @exe: name of argv[0] from main
+ * @path: cmd_path to free before returning
  *
- * Return: int error code
+ * Return: error number
 */
-int permission_denied_error(cmd_t *cmd, int linecounter, char *exename)
+int f_error(char *err, int eno, cmd_t *cmd, int linec, char *exe, char *path)
 {
 	char *message, *lcstr;
-	int i, t;
+	int i, t, lcmd = _strlen(cmd->cmd), lerr = _strlen(err);
 
-	lcstr = _itoa(linecounter);
-	message = malloc(_strlen(exename) + _strlen(lcstr) + _strlen(cmd->cmd) + 5);
-	for (i = 0, t = 0; exename[i]; i++, t++)
-		message[t] = exename[i];
-	message[t++] = ':';
-	message[t++] = ' ';
-	for (i = 0; lcstr[i]; i++, t++)
-		message[t] = lcstr[i];
-	message[t++] = ':';
-	message[t++] = ' ';
-	for (i = 0; cmd->cmd[i]; i++, t++)
-		message[t] = cmd->cmd[i];
-	message[t] = '\0';
-	perror(message);
-	free(message);
-	free(lcstr);
-	errno = 126;
-	return (errno);
-}
-/**
- * file_not_found_error - prints error for file not found
- * @cmd: command struct
- * @linecounter: current line in shell
- * @exename: name of shell
- *
- * Return: int error code
-*/
-int file_not_found_error(cmd_t *cmd, int linecounter, char *exename)
-{
-	char *message, *err = "not found\n", *lcstr;
-	int i, t;
-
-	lcstr = _itoa(linecounter);
-	message = malloc(_strlen(exename) + _strlen(lcstr) + _strlen(cmd->cmd) + 17);
-	for (i = 0, t = 0; exename[i]; i++, t++)
-		message[t] = exename[i];
+	lcstr = _itoa(linec);
+	message = malloc(_strlen(exe) + _strlen(lcstr) + lcmd + lerr + 8);
+	for (i = 0, t = 0; exe[i]; i++, t++)
+		message[t] = exe[i];
 	message[t++] = ':';
 	message[t++] = ' ';
 	for (i = 0; lcstr[i]; i++, t++)
@@ -93,13 +64,17 @@ int file_not_found_error(cmd_t *cmd, int linecounter, char *exename)
 	message[t++] = ' ';
 	for (i = 0; err[i]; i++, t++)
 		message[t] = err[i];
+	message[t++] = '\n';
 	message[t++] = '\0';
 	write(STDERR_FILENO, message, _strlen(message));
-	free(lcstr);
+	errno = eno;
+	free(path);
 	free(message);
-	errno = 127;
-	return (errno);
+	free(lcstr);
+
+	return (eno);
 }
+
 /**
  * execute_command - determines type of cmd and executes or logs error
  * @cmd: command struct
@@ -114,13 +89,14 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 	char *cmd_path;
 	pid_t pid;
 	int status, exec;
+	char *err_notfound = "not found";
+	char *err_xok = "Permission denied";
 
 	cmd_path = get_command_path(cmd);
 	if (check_file_exists(cmd_path) == 0)
-	{
-		free(cmd_path);
-		return (file_not_found_error(cmd, linec, exename));
-	}
+		return (f_error(err_notfound, 127, cmd, linec, exename, cmd_path));
+	if (access(cmd_path, X_OK) != 0)
+		return (f_error(err_xok, 126, cmd, linec, exename, cmd_path));
 	if (cmd_path != NULL)
 	{
 		pid = fork();
@@ -134,10 +110,7 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 		{
 			exec = execve(cmd_path, cmd->args, environ);
 			if (exec == -1)
-			{
-				free(cmd_path);
-				return (permission_denied_error(cmd, linec, exename));
-			}
+				return (f_error(err_xok, 2, cmd, linec, exename, cmd_path));
 		}
 		else
 		{
