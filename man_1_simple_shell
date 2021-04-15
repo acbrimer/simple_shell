@@ -1,8 +1,8 @@
-.\" Manpage for BENNY
+.\" Manpage for BENNY simple shell
 .\" Created by Adam Brimer and Rachel Lewis
 .TH "BENNY simple_shell" 1 "14 04 2021" "General Commands Manual 1.0" "simple_shell man page"
 .SH NAME
-B.E.N.N.Y. \- Best Ever iNteractive and Non Yes \- command interpreter (simple shell)
+B.E.N.N.Y. \- The Best Ever iNteractive and noN-interactive Yes Shell \- command interpreter (simple shell)
 .SH SYNOPSIS
 .P
 BENNY$ [command_string]
@@ -110,14 +110,6 @@ To display the current working directory while outside of the shell in non-inter
 $ echo "ls" | ./hsh
 .RE
 .P
-For the following executable program named "script" with user execution permissions:
-.RS
-.P
-#!/bin/bash
-.P
-ls
-.RE
-.P
 Display the current working directory via the above executable program by:
 .RS
 .P
@@ -127,7 +119,7 @@ BENNY$ ./script
 Exit the BENNY shell by:
 .RS
 .P
-BENNY$ : exit
+BENNY$ exit
 .SH
 FILES
 .HP
@@ -138,9 +130,9 @@ The BENNY shell executable file.
 .SH
 AUTHORS
 .P
-Adam Brimer
+Adam Brimer - abrimer@mac.com
 .P
-Rachel Lewis - 2708@holbertonschool.com
+Rachel Lewis - rlewis11769@gmail.com
 .SH
 BUGS
 .P
