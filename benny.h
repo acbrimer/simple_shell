@@ -13,7 +13,6 @@
  * struct cmd_s - holds parsed cmd
  * @cmd: command
  * @args: args for command
- * @out_fd: where to write results of command
  *
  * Description: holds all info for a parsed cmd
 */
@@ -22,7 +21,6 @@ typedef struct cmd_s
 {
 	char *cmd;
 	char **args;
-	int out_fd;
 } cmd_t;
 
 extern char **environ;
@@ -57,8 +55,6 @@ char **_strtow(char *str, char delim);
 char *_strtok(char *str, int start, char delim);
 int _charcount(char *str, char delim);
 int _wordcount(char *str, char delim);
-/* itoa.c */
-char *_itoa(int n);
 /* string.c */
 char *_strdup(char *str);
 int _strlen(char *s);
