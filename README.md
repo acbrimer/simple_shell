@@ -112,8 +112,11 @@ $
 - Custom env builtin command
 - Custom exit builtin command
 - Custom _getenv function
+- Custom _setenv function
+- Custom _unsetenv function
 - Custom _strtok function
 - Ctrl-D exits the program
+- Ctrl-C does not exit the program
 
 ## Structure
 
@@ -122,22 +125,24 @@ $
 ##### main.c
 - Prototypes:
   - void check_linelen(char *exename, char *cmdBuffer, int mode, int linelen);
+  - void sigint_handler(int sig);
   - int main(int argc, char **argv);
 #### parse_command.c
 - Prototypes:
   - cmd_t *parse_command(char *cmd_str);
+  - char *replace_char(char *str, char find, char replace);
 #### execute_command.c
 - Prototypes:
-  - int execute_command(cmd_t *cmd, char *argv, char *cmdBuffer);
-  - char *replace_char(char *str, char find, char replace);
+  - int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename);
+  - int check_file_exists(char *path);
+  - void free_cmd_vars(cmd_t *cmd, char *cmd_path, char *cmdBuffer);
+  - int permission_denied_error(cmd_t *cmd, int linecounter, char *exename);
+  - int file_not_found_error(cmd_t *cmd, int linecounter, char *exename);
 #### get_command_path.c
 - Prototypes:
-  - char **add_pwd_to_paths(char **env_paths);
   - char **get_env_paths(void);
-  - char *get_command_path(cmd_t *cmd, char *argv);
-#### error.c
-- Prototypes:
-  - int errorNotFound(char *argv, char *command);
+  - char *get_command_path(cmd_t *cmd);
+  - char **add_pwd_to_paths(char *path, int pcount, char **env_paths);
 #### log_command.c
 - Prototypes:
   - int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
@@ -156,6 +161,11 @@ $
 #### getenv.c
 - Prototypes:
   - char *_getenv(const char *name);
+#### setenv.c
+- Prototypes:
+  - int _unsetenv(const char *name);
+  - int _setenv(const char *name, const char *value, int overwrite);
+  - int _strncmp(char *s1, char *s2, unsigned int n);
 
 ### Helper Functions
 
@@ -172,6 +182,9 @@ $
   - int _strcmp(char *s1, char *s2);
   - char *_strdup(char *str);
   - int _strlen(char *s);
+#### itoa.c
+- Prototypes:
+  - char *_itoa(int n);
 
 ### Library Functions limited to:
 
