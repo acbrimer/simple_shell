@@ -40,6 +40,9 @@ int (*get_command_fn(cmd_t cmd))(cmd_t);
 /* execute_command.c */
 int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename);
 void handle_command_error(cmd_t cmd);
+/* setenv.c */
+int _unsetenv(const char *name);
+int _setenv(const char *name, const char *value, int overwrite);
 /* builtin_cd.c */
 void _cd(cmd_t cmd);
 /* strtok.c */
@@ -66,7 +69,6 @@ void exitFunction(cmd_t *cmd, char *cmdBuffer);
 void printEnv(void);
 /* getenv.c */
 char *_getenv(const char *name);
-void _setenv(cmd_t *cmd);
 /* error.c */
 int errorNotFound(char *argv, char *command);
 /* replace_char.c */
