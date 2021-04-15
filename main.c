@@ -21,6 +21,16 @@ void check_linelen(char *exename, char *cmdBuffer, int mode, int linelen)
 		perror(exename), exit(errnum);
 	}
 }
+
+/**
+ * sigint_handler - void method to catch Ctrl+C
+ * @sig: signal from signal() call (voided)
+*/
+void sigint_handler(int sig)
+{
+	(void)sig;
+}
+
 /**
  * main - runs shell in interactive and non interactive modes
  * @argc: number of args (voided)
@@ -36,6 +46,7 @@ int main(__attribute((unused))int argc, char **argv)
 	cmd_t *cmd;
 	int linecounter = 1;
 
+	signal(SIGINT, sigint_handler);
 	while (1)
 	{
 		if (mode)
