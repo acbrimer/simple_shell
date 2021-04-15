@@ -50,9 +50,13 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 
 void exitFunction(cmd_t *cmd, char *cmdBuffer)
 {
+	int exitstatus = 0;
+
+	if (cmd->args != NULL && cmd->args[1] != NULL)
+		exitstatus = _atoi(cmd->args[1]);
 	free_cmd_t(cmd);
 	free(cmdBuffer);
-	exit(0);
+	exit(exitstatus);
 }
 
 /**

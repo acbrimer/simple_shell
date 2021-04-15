@@ -75,5 +75,5 @@ int errorNotFound(char *argv, char *command);
 char *replace_char(char *str, char find, char replace);
 /* itoa.c */
 char *_itoa(int n);
-
+int _atoi(char *s);
 #endif
