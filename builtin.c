@@ -38,7 +38,7 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 				}
 				if (x == 4)
 				{
-					cdFunction(cmd);
+					cdFunction(cmd, cmdBuffer);
 					return (1);
 				}
 			}
@@ -47,17 +47,19 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 	return (0);
 }
 
-void cdFunction(cmd_t *cmd)
+void cdFunction(cmd_t *cmd, char *cmdBuffer)
 {
 	char cwd[1000], *target;
+	int l = 0;
 
-	if (cmd->args == NULL || cmd->args[0] == NULL)
+	while (cmdBuffer[l])
+		l++;
+	if (l <= 3)
 		target = _getenv("HOME");
 	else if (_strcmp(cmd->args[1], "-") == 0)
 		target = _getenv("HOME");
 	else
 		target = _strdup(cmd->args[1]);
-	printf("Target: %s\n", target);
 	chdir(target);
 	free(target);
 	getcwd(cwd, 1000);
