@@ -64,5 +64,5 @@ int main(__attribute((unused))int argc, char **argv)
 			break;
 	}
 	free(cmdBuffer);
-	return (errno);
+	return (0);
 }
