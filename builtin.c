@@ -10,7 +10,7 @@
 
 int builtin(cmd_t *cmd, char *cmdBuffer)
 {
-	char *builtins[] = {"exit", "env", "setenv", "unsetenv", NULL};
+	char *builtins[] = {"exit", "env", "setenv", "unsetenv", "cd", NULL};
 	int x;
 
 	if (builtins[0])
@@ -36,10 +36,32 @@ int builtin(cmd_t *cmd, char *cmdBuffer)
 					_unsetenv(cmd->args[1]);
 					return (1);
 				}
+				if (x == 4)
+				{
+					cdFunction(cmd);
+					return (1);
+				}
 			}
 		}
 	}
 	return (0);
+}
+
+void cdFunction(cmd_t *cmd)
+{
+	char cwd[1000], *target;
+
+	if (cmd->args == NULL || cmd->args[0] == NULL)
+		target = _getenv("HOME");
+	else if (_strcmp(cmd->args[1], "-") == 0)
+		target = _getenv("HOME");
+	else
+		target = _strdup(cmd->args[1]);
+	printf("Target: %s\n", target);
+	chdir(target);
+	free(target);
+	getcwd(cwd, 1000);
+	_setenv("PWD", cwd, 1);
 }
 
 /**
