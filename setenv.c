@@ -75,7 +75,6 @@ int _setenv(const char *n, const char *val, int overwrite)
 	char *ev;
 	int res = 0, i, ii;
 
-	printf("%s=%s\n", n, val);
 	if (n == NULL || n[0] == '\0' || _strchr((char *)n, '=') != 0 || val == NULL)
 		return (-1);
 	if (_getenv(n) != NULL && overwrite == 0)
