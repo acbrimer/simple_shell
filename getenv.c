@@ -16,10 +16,7 @@ char *_getenv(const char *name)
 		env_item = _strtow(environ[i], '=');
 		if (_strcmp(env_var, env_item[0]) == 0)
 		{
-			if (env_item[1] == NULL)
-				env_val = _strdup("");
-			else
-				env_val = _strdup(env_item[1]);
+			env_val = _strdup(env_item[1]);
 			free_str_array(env_item);
 			return (env_val);
 		}
