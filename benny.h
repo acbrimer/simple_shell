@@ -30,7 +30,7 @@ extern int errno;
 /* main.c */
 void check_linelen(char *exename, char *cmdBuffer, int mode, int linelen);
 void sigint_handler(int sig);
-void main_cleanup (void) __attribute__ ((destructor));
+void main_cleanup(void) __attribute__ ((destructor));
 void set_environ(void);
 /* parse_command.c */
 cmd_t *parse_command(char *cmd_str);
