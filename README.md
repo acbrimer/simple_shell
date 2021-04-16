@@ -42,7 +42,7 @@ To enter interactive mode, start the BENNY program with "./hsh" if compiled as d
 
 ```
 $ ./hsh
-BENNY$ [desired commands]
+BENNY$ [desired command]
 BENNY$ [BENNY's output]
 BENNY$ exit
 $
@@ -55,7 +55,7 @@ In non-interactive mode, the user can have a one-time interaction with BENNY.
 To use BENNY in non-interactive mode, echo a command in double quotes and pipe it into BENNY with "./hsh" if compiled as directed.
 
 ```
-$ echo "[command]" | ./hsh
+$ echo "[desired command]" | ./hsh
 $ [BENNY's output]
 $
 ```
@@ -87,9 +87,8 @@ __Non-Interactive__
 Pipe a command into BENNY with:
 ```
 $ echo "ls" | ./hsh
-a.out    builtin.c          free_mem_fns.c      log_command.c  man_1_simple_shell  string.c
-AUTHORS  error.c            get_command_path.c  log.txt        parse_command.c     strtow.c
-benny.h  execute_command.c  getenv.c            main.c         README.md
+AUTHORS  builtin.c          free_mem_fns.c      getenv.c  main.c              parse_command.c  setenv.c  strtow.c
+benny.h  execute_command.c  get_command_path.c  itoa.c    man_1_simple_shell  README.md        string.c
 $
 ```
 
@@ -97,9 +96,8 @@ Use multi-line commands with:
 ```
 $ echo "ls
 > ls -a" | ./hsh
-a.out    builtin.c          free_mem_fns.c      log_command.c  man_1_simple_shell  string.c
-AUTHORS  error.c            get_command_path.c  log.txt        parse_command.c     strtow.c
-benny.h  execute_command.c  getenv.c            main.c         README.md
+AUTHORS  builtin.c          free_mem_fns.c      getenv.c  main.c              parse_command.c  setenv.c  strtow.c
+benny.h  execute_command.c  get_command_path.c  itoa.c    man_1_simple_shell  README.md        string.c
 .      AUTHORS    error.c            get_command_path.c  .gitignore     main.c              README.md
 ..     benny.h    execute_command.c  getenv.c            log_command.c  man_1_simple_shell  string.c
 a.out  builtin.c  free_mem_fns.c     .git                log.txt        parse_command.c     strtow.c
@@ -111,9 +109,10 @@ $
 - Zero memory leaks
 - Custom env builtin command
 - Custom exit builtin command
+- Custom setenv builtin command
+- Custom unsetenv builtin command
+- Custom cd builtin command
 - Custom _getenv function
-- Custom _setenv function
-- Custom _unsetenv function
 - Custom _strtok function
 - Ctrl-D exits the program
 - Ctrl-C does not exit the program
@@ -136,16 +135,12 @@ $
   - int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename);
   - int check_file_exists(char *path);
   - void free_cmd_vars(cmd_t *cmd, char *cmd_path, char *cmdBuffer);
-  - int permission_denied_error(cmd_t *cmd, int linecounter, char *exename);
-  - int file_not_found_error(cmd_t *cmd, int linecounter, char *exename);
+
 #### get_command_path.c
 - Prototypes:
   - char **get_env_paths(void);
   - char *get_command_path(cmd_t *cmd);
   - char **add_pwd_to_paths(char *path, int pcount, char **env_paths);
-#### log_command.c
-- Prototypes:
-  - int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
 #### free_mem_fns.c
 - Prototypes:
   - char **free_str_array(char **arr);
@@ -166,7 +161,7 @@ $
   - int _unsetenv(const char *name);
   - int _setenv(const char *name, const char *value, int overwrite);
   - int _strncmp(char *s1, char *s2, unsigned int n);
-
+  - int f_error(char *err, int eno, cmd_t *cmd, int linec, char *exe, char *path);
 ### Helper Functions
 
 #### strtow.c
@@ -188,6 +183,7 @@ $
 
 ### Library Functions limited to:
 
+- access
 - execve
 - exit
 - fork
