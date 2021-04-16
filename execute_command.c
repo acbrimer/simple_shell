@@ -93,7 +93,7 @@ int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 	char *err_xok = "Permission denied";
 
 	cmd_path = get_command_path(cmd);
-	if (check_file_exists(cmd_path) == 0)
+	if ((check_file_exists(cmd_path) == 0) || (cmd_path == NULL))
 		return (f_error(err_notfound, 127, cmd, linec, exename, cmd_path));
 	if (access(cmd_path, X_OK) != 0)
 		return (f_error(err_xok, 126, cmd, linec, exename, cmd_path));
