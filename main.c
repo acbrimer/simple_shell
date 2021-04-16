@@ -32,6 +32,7 @@ void sigint_handler(int sig)
 	write(STDOUT_FILENO, "\nBENNY$ ", 8);
 }
 
+
 /**
  * main - runs shell in interactive and non interactive modes
  * @argc: number of args (voided)
@@ -58,7 +59,9 @@ int main(__attribute((unused))int argc, char **argv)
 			i = 0;
 			while (cmdBuffer[i] == ' ')
 				i++;
-			if (linelen - i == 1)
+			if (linelen - i == 1 && !mode)
+				continue;
+			if (linelen - i == 1 && mode)
 				break;
 			/* log_cmd("log.txt", (cmdBuffer + i), linelen - i); */
 			cmdBuffer[linelen - 1] = '\0';
@@ -78,4 +81,21 @@ int main(__attribute((unused))int argc, char **argv)
 	}
 	free(cmdBuffer);
 	return (mode ? 0 : errno);
+}
+
+/**
+ * set_environ - mallocs a freeable environ var
+*/
+void set_environ(void)
+{
+	char **env;
+	int i, l = 0;
+
+	while (environ[l])
+		l++;
+	env = malloc(sizeof(char *) * (l + 1));
+	for (i = 0; i < l; i++)
+		env[i] = _strdup(environ[i]);
+	env[i] = NULL;
+	environ = env;
 }

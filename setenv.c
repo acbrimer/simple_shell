@@ -43,22 +43,39 @@ int _strncmp(char *s1, char *s2, unsigned int n)
 */
 int _unsetenv(const char *n)
 {
-	char **ep, **sp;
-	size_t len;
+	char **new_env, **env_item;
+	int nix = -1, i, ii;
 
 	if (n == NULL || n[0] == '\0' || _strchr((char *)n, '=') != 0)
 		return (-1);
-	len = _strlen((char *)n);
-	for (ep = environ; *ep != NULL; )
-		/* check if current ep string == name */
-		if (_strncmp(*ep, (char *)n, len) == 0 && (*ep)[len] == '=')
+	/* loop through to find index of env var to remove */
+	for (i = 0; environ[i]; i++)
+	{
+		env_item = _strtow(environ[i], '=');
+		/* if text before = on environ[i] matches n, set index and break */
+		if (_strcmp((char *)n, env_item[0]) == 0)
+			nix = i;
+		free_str_array(env_item);
+	}
+	/* env var doesn't exist so return */
+	if (nix == -1)
+		return (0);
+	/* copy all strings from environ to temp array, free environ, set to temp */
+	new_env = malloc(sizeof(char *) * i);
+	for (i = 0, ii = 0; environ[ii]; i++, ii++)
+	{
+		/* copy strings unless we're at the index of var to remove */
+		if (i == nix)
 		{
-			/* Found entry. Remove and shift all following entries back 1 */
-			for (sp = ep; *sp != NULL; sp++)
-				*sp = *(sp + 1);
+			ii++;
+			continue;
 		}
-		else
-			ep++;
+		new_env[i] = _strdup(environ[ii]);
+	}
+	new_env[i] = NULL;
+	free_str_array(environ);
+	environ = new_env;
+
 	return (0);
 }
 
@@ -91,5 +108,6 @@ int _setenv(const char *n, const char *val, int overwrite)
 		ev[ii] = val[i];
 	ev[ii] = '\0';
 	res = putenv(ev);
+
 	return ((res != 0) ? -1 : 0);
 }
