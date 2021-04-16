@@ -8,7 +8,6 @@
  *
  * Return: concat string
  */
-
 char *str_concat(char *s1, char *s2, char *delim)
 {
 	int a = 0, b = 0, d = 0, i, l;
@@ -45,7 +44,6 @@ char *str_concat(char *s1, char *s2, char *delim)
  *
  * Return: 1 for has char, else 0
  */
-
 int _strchr(char *s, char c)
 {
 	int i = 0;
@@ -68,7 +66,6 @@ int _strchr(char *s, char c)
  * @s2: second string to be compared
  * Return: number of bytes different (0 if identical)
  */
-
 int _strcmp(char *s1, char *s2)
 {
 	int x;
@@ -101,7 +98,6 @@ int _strcmp(char *s1, char *s2)
  *
  * Return: char * pointer to copied string
  */
-
 char *_strdup(char *str)
 {
 	int l = 0, i;
@@ -127,7 +123,6 @@ char *_strdup(char *str)
  *
  * Return: length of string
  */
-
 int _strlen(char *s)
 {
 	int l = 0;
