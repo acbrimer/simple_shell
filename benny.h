@@ -29,6 +29,8 @@ extern int errno;
 /* main.c */
 void check_linelen(char *exename, char *cmdBuffer, int mode, int linelen);
 void sigint_handler(int sig);
+void main_cleanup (void) __attribute__ ((destructor));
+void set_environ(void);
 /* log_command.c */
 int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
 /* parse_command.c */
