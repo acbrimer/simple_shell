@@ -60,12 +60,17 @@ exit
 Terminates the shell process.
 .RE
 .HP
-_setenv
+cd
+.RS
+Changes current working directory
+.RE
+.HP
+setenv
 .RS
 Sets a variable in the environment.
 .RE
 .HP
-_unsetenv
+unsetenv
 .RS
 Unsets a variable in the environment.
 .RE
