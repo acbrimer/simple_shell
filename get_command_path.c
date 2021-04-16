@@ -69,8 +69,6 @@ char **get_env_paths(void)
 	path = _getenv("PATH");
 	/* fix to use pwd if PATH is null */
 	if (path == NULL)
-		return (NULL);
-	if (_strcmp(path, "") == 0)
 	{
 		pwd = _getenv("PWD");
 		env_paths = malloc(sizeof(char *) * 2);
