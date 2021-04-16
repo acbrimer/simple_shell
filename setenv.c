@@ -1,6 +1,5 @@
 #include "benny.h"
 
-
 /**
  * *_strncmp - compares first n chars for s1 to s2
  * @s1: first string to be compared
@@ -33,7 +32,6 @@ int _strncmp(char *s1, char *s2, unsigned int n)
 	}
 	return (comp);
 }
-
 
 /**
  * _unsetenv - removes env var

@@ -1,5 +1,4 @@
 #include "benny.h"
-#include <limits.h>
 
 /**
  * add_pwd_to_paths - if path has extra ':' add cwd
@@ -103,7 +102,7 @@ char *get_command_path(cmd_t *cmd)
 	char *cmd_path = NULL;
 	char *delim = "/";
 
-	/* if cmd.cmd starts with i/, use as path w/out concat PATH */
+	/* if cmd.cmd starts with '/', use as path w/out concat PATH */
 	match = _strchr(cmd->cmd, '/');
 	if (match != 0)
 	{

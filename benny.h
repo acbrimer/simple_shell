@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <errno.h>
+#include <limits.h>
 
 /**
  * struct cmd_s - holds parsed cmd
@@ -31,8 +32,6 @@ void check_linelen(char *exename, char *cmdBuffer, int mode, int linelen);
 void sigint_handler(int sig);
 void main_cleanup (void) __attribute__ ((destructor));
 void set_environ(void);
-/* log_command.c */
-int log_cmd(const char *logfile, char *cmd, size_t cmd_len);
 /* parse_command.c */
 cmd_t *parse_command(char *cmd_str);
 char *replace_char(char *str, char find, char replace);
@@ -72,10 +71,6 @@ void exitFunction(cmd_t *cmd, char *cmdBuffer);
 void printEnv(void);
 /* getenv.c */
 char *_getenv(const char *name);
-/* error.c */
-int errorNotFound(char *argv, char *command);
-/* replace_char.c */
-char *replace_char(char *str, char find, char replace);
 /* itoa.c */
 char *_itoa(int n);
 int _atoi(char *s);

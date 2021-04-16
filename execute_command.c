@@ -82,7 +82,7 @@ int f_error(char *err, int eno, cmd_t *cmd, int linec, char *exe, char *path)
  * @linec: linecounter from main
  * @exename: argv[0]
  *
- * Return: 0 if successful
+ * Return: proper exit code (0 by default)
 */
 int execute_command(cmd_t *cmd, char *cmdBuffer, int linec, char *exename)
 {
